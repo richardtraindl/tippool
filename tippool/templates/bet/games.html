@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Spiele
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="small-gap"></div>
+
+<div class="subnav">
+    {% for ev in events %}
+        {% if ev == event %}
+            {{ ev.label }} |
+        {% else %}
+            <a href="{% url 'bet.views.games' ev.id %}">{{ ev.label }}</a> |
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="subnav">Finale 1/8 | 1/4 | 1/2 | 1</div>
+
+<div class="gap"></div>
+
+<h2>Spiele {{ event.label }} </h2>
+
+<div class="div-table timetable">
+        {% for match in matches %}
+            <div class="gap"></div>
+            
+            <div class="div-row">
+                <div class="div-cell timetable-time">
+                    {{ match.begin }}
+                </div>
+                <div class="div-cell right timetable-team">
+                    {{ match.team1_name }}
+                </div>
+                <div class="div-cell center timetable-spacer">
+                    :
+                </div>
+                <div class="div-cell timetable-team">
+                    {{ match.team2_name }}
+                </div>
+                <div class="div-cell timetable-tip">
+                    {% if match.status == 30 %}
+                        <a href=#>tippen</a>
+                    {% else %}
+                        tippen
+                    {% endif %}
+                </div>
+            </div>
+            <div class="div-row">
+                <div class="div-cell timetable-time">
+                    &nbsp;
+                </div>
+                <div class="div-cell right timetable-team">
+                    {% if match.status == 30 and match.team1_score_regular != None %}
+                        {{ match.team1_score_regular }}
+                    {% else %}
+                        <img class="right-spacer" src="{{STATIC_URL}}img/horizontal-line.png">
+                        <div style="clear:both"></div>
+                    {% endif %}            
+                </div>
+                <div class="div-cell center timetable-spacer">
+                    :
+                </div>
+                <div class="div-cell timetable-team">
+                    {% if match.status == 30 and match.team2_score_regular != None %}
+                        {{ match.team2_score_regular }}
+                    {% else %}
+                        <img class="left-spacer" src="{{STATIC_URL}}img/horizontal-line.png">
+                        <div style="clear:both"></div>
+                    {% endif %} 
+                </div>
+                <div class="div-cell timetable-tip">
+                    &nbsp;
+                </div>
+            </div>
+
+        {% if  match.has_overtime %}
+            <div class="div-row">
+                <div class="div-cell timetable-time">
+                    &nbsp;
+                </div>
+                <div class="div-cell right timetable-team">
+                    {% if match.status == 30 and match.team1_score_overtime != None %}
+                        {{ match.team1_score_overtime }}
+                    {% else %}
+                        <img class="right-spacer" src="{{STATIC_URL}}img/horizontal-line.png">
+                        <div style="clear:both"></div>
+                    {% endif %}            
+                </div>
+                <div class="div-cell center timetable-spacer">
+                    :
+                </div>
+                <div class="div-cell timetable-team">
+                    {% if match.status == 30 and match.team2_score_overtime != None %}
+                        {{ match.team2_score_overtime }}
+                    {% else %}
+                        <img class="left-spacer" src="{{STATIC_URL}}img/horizontal-line.png">
+                        <div style="clear:both"></div>
+                    {% endif %} 
+                </div>
+                <div class="div-cell timetable-tip">
+                    &nbsp;
+                </div>
+            </div>
+        {% endif %}      
+    
+        {% if match.has_penalties %}
+            <div class="div-row">
+                <div class="div-cell timetable-time">
+                    &nbsp;
+                </div>
+                <div class="div-cell right timetable-team">
+                    {% if match.status == 30 and match.team1_score_penalties != None %}
+                        {{ match.team1_score_penalties }}
+                    {% else %}
+                        <img class="right-spacer" src="{{STATIC_URL}}img/horizontal-line.png">
+                        <div style="clear:both"></div>
+                    {% endif %}            
+                </div>
+                <div class="div-cell center timetable-spacer">
+                    :
+                </div>
+                <div class="div-cell timetable-team">
+                    {% if match.status == 30 and match.team2_score_penalties != None %}
+                        {{ match.team2_score_penalties }}
+                    {% else %}
+                        <img class="left-spacer" src="{{STATIC_URL}}img/horizontal-line.png">
+                        <div style="clear:both"></div>
+                    {% endif %} 
+                </div>
+                <div class="div-cell timetable-tip">
+                    &nbsp;
+                </div>
+            </div>
+        {% endif %} 
+   {% endfor %}
+</div>
+
+
+{% endblock %}

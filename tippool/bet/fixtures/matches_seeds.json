@@ -1,0 +1,1394 @@
+[
+  {
+    "model": "bet.match",
+    "pk": 1,
+    "fields": {
+      "event": ["Gruppe A"],
+      "begin": "2014-06-12T17:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 1,
+    "fields": {
+      "match": 1,
+      "team": ["Brasilien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 2,
+    "fields": {
+      "match": 1,
+      "team": ["Kroatien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 2,
+    "fields": {
+      "event": ["Gruppe A"],
+      "begin": "2014-06-13T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 3,
+    "fields": {
+      "match": 2,
+      "team": ["Mexiko"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 4,
+    "fields": {
+      "match": 2,
+      "team": ["Kamerun"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 3,
+    "fields": {
+      "event": ["Gruppe A"],
+      "begin": "2014-06-17T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 5,
+    "fields": {
+      "match": 3,
+      "team": ["Brasilien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 6,
+    "fields": {
+      "match": 3,
+      "team": ["Mexiko"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 4,
+    "fields": {
+      "event": ["Gruppe A"],
+      "begin": "2014-06-18T18:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 7,
+    "fields": {
+      "match": 4,
+      "team": ["Kamerun"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 8,
+    "fields": {
+      "match": 4,
+      "team": ["Kroatien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 5,
+    "fields": {
+      "event": ["Gruppe A"],
+      "begin": "2014-06-23T17:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 9,
+    "fields": {
+      "match": 5,
+      "team": ["Kamerun"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 10,
+    "fields": {
+      "match": 5,
+      "team": ["Brasilien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 6,
+    "fields": {
+      "event": ["Gruppe A"],
+      "begin": "2014-06-23T17:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 11,
+    "fields": {
+      "match": 6,
+      "team": ["Kroatien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 12,
+    "fields": {
+      "match": 6,
+      "team": ["Mexiko"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 7,
+    "fields": {
+      "event": ["Gruppe B"],
+      "begin": "2014-06-13T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 13,
+    "fields": {
+      "match": 7,
+      "team": ["Spanien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 14,
+    "fields": {
+      "match": 7,
+      "team": ["Niederlande"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 8,
+    "fields": {
+      "event": ["Gruppe B"],
+      "begin": "2014-06-13T18:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 15,
+    "fields": {
+      "match": 8,
+      "team": ["Chile"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 16,
+    "fields": {
+      "match": 8,
+      "team": ["Australien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 9,
+    "fields": {
+      "event": ["Gruppe B"],
+      "begin": "2014-06-18T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 17,
+    "fields": {
+      "match": 9,
+      "team": ["Australien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 18,
+    "fields": {
+      "match": 9,
+      "team": ["Niederlande"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 10,
+    "fields": {
+      "event": ["Gruppe B"],
+      "begin": "2014-06-18T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 19,
+    "fields": {
+      "match": 10,
+      "team": ["Spanien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 20,
+    "fields": {
+      "match": 10,
+      "team": ["Chile"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 11,
+    "fields": {
+      "event": ["Gruppe B"],
+      "begin": "2014-06-23T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 21,
+    "fields": {
+      "match": 11,
+      "team": ["Australien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 22,
+    "fields": {
+      "match": 11,
+      "team": ["Spanien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 12,
+    "fields": {
+      "event": ["Gruppe B"],
+      "begin": "2014-06-23T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 23,
+    "fields": {
+      "match": 12,
+      "team": ["Niederlande"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 24,
+    "fields": {
+      "match": 12,
+      "team": ["Chile"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 13,
+    "fields": {
+      "event": ["Gruppe C"],
+      "begin": "2014-06-14T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 25,
+    "fields": {
+      "match": 13,
+      "team": ["Kolumbien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 26,
+    "fields": {
+      "match": 13,
+      "team": ["Griechenland"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 14,
+    "fields": {
+      "event": ["Gruppe C"],
+      "begin": "2014-06-14T22:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 27,
+    "fields": {
+      "match": 14,
+      "team": ["Elfenbeinküste"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 28,
+    "fields": {
+      "match": 14,
+      "team": ["Japan"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 15,
+    "fields": {
+      "event": ["Gruppe C"],
+      "begin": "2014-06-19T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 29,
+    "fields": {
+      "match": 15,
+      "team": ["Kolumbien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 30,
+    "fields": {
+      "match": 15,
+      "team": ["Elfenbeinküste"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 16,
+    "fields": {
+      "event": ["Gruppe C"],
+      "begin": "2014-06-19T19:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 31,
+    "fields": {
+      "match": 16,
+      "team": ["Japan"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 32,
+    "fields": {
+      "match": 16,
+      "team": ["Griechenland"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 17,
+    "fields": {
+      "event": ["Gruppe C"],
+      "begin": "2014-06-24T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 33,
+    "fields": {
+      "match": 17,
+      "team": ["Japan"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 34,
+    "fields": {
+      "match": 17,
+      "team": ["Kolumbien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 18,
+    "fields": {
+      "event": ["Gruppe C"],
+      "begin": "2014-06-24T17:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 35,
+    "fields": {
+      "match": 18,
+      "team": ["Griechenland"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 36,
+    "fields": {
+      "match": 18,
+      "team": ["Elfenbeinküste"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 19,
+    "fields": {
+      "event": ["Gruppe D"],
+      "begin": "2014-06-14T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 37,
+    "fields": {
+      "match": 19,
+      "team": ["Uruguay"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 38,
+    "fields": {
+      "match": 19,
+      "team": ["Costa Rica"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 20,
+    "fields": {
+      "event": ["Gruppe D"],
+      "begin": "2014-06-14T18:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 39,
+    "fields": {
+      "match": 20,
+      "team": ["England"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 40,
+    "fields": {
+      "match": 20,
+      "team": ["Italien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 21,
+    "fields": {
+      "event": ["Gruppe D"],
+      "begin": "2014-06-19T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 41,
+    "fields": {
+      "match": 21,
+      "team": ["Uruguay"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 42,
+    "fields": {
+      "match": 21,
+      "team": ["England"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 22,
+    "fields": {
+      "event": ["Gruppe D"],
+      "begin": "2014-06-20T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 43,
+    "fields": {
+      "match": 22,
+      "team": ["Italien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 44,
+    "fields": {
+      "match": 22,
+      "team": ["Costa Rica"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 23,
+    "fields": {
+      "event": ["Gruppe D"],
+      "begin": "2014-06-24T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 45,
+    "fields": {
+      "match": 23,
+      "team": ["Italien"],
+      "rank": "1"
+    }
+  },
+    {
+    "model": "bet.opponent",
+    "pk": 46,
+    "fields": {
+      "match": 23,
+      "team": ["Uruguay"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 24,
+    "fields": {
+      "event": ["Gruppe D"],
+      "begin": "2014-06-24T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 47,
+    "fields": {
+      "match": 24,
+      "team": ["Costa Rica"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 48,
+    "fields": {
+      "match": 24,
+      "team": ["England"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 25,
+    "fields": {
+      "event": ["Gruppe E"],
+      "begin": "2014-06-15T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 49,
+    "fields": {
+      "match": 25,
+      "team": ["Schweiz"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 50,
+    "fields": {
+      "match": 25,
+      "team": ["Ecuador"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 26,
+    "fields": {
+      "event": ["Gruppe E"],
+      "begin": "2014-06-15T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 51,
+    "fields": {
+      "match": 26,
+      "team": ["Frankreich"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 52,
+    "fields": {
+      "match": 26,
+      "team": ["Honduras"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 27,
+    "fields": {
+      "event": ["Gruppe E"],
+      "begin": "2014-06-20T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 53,
+    "fields": {
+      "match": 27,
+      "team": ["Schweiz"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 54,
+    "fields": {
+      "match": 27,
+      "team": ["Frankreich"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 28,
+    "fields": {
+      "event": ["Gruppe E"],
+      "begin": "2014-06-20T19:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 55,
+    "fields": {
+      "match": 28,
+      "team": ["Honduras"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 56,
+    "fields": {
+      "match": 28,
+      "team": ["Ecuador"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 29,
+    "fields": {
+      "event": ["Gruppe E"],
+      "begin": "2014-06-25T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 57,
+    "fields": {
+      "match": 29,
+      "team": ["Honduras"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 58,
+    "fields": {
+      "match": 29,
+      "team": ["Schweiz"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 30,
+    "fields": {
+      "event": ["Gruppe E"],
+      "begin": "2014-06-25T17:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 59,
+    "fields": {
+      "match": 30,
+      "team": ["Ecuador"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 60,
+    "fields": {
+      "match": 30,
+      "team": ["Frankreich"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 31,
+    "fields": {
+      "event": ["Gruppe F"],
+      "begin": "2014-06-15T19:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 61,
+    "fields": {
+      "match": 31,
+      "team": ["Argentinien"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 62,
+    "fields": {
+      "match": 31,
+      "team": ["Bosnien-Herz."],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 32,
+    "fields": {
+      "event": ["Gruppe F"],
+      "begin": "2014-06-16T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 63,
+    "fields": {
+      "match": 32,
+      "team": ["Iran"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 64,
+    "fields": {
+      "match": 32,
+      "team": ["Nigeria"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 33,
+    "fields": {
+      "event": ["Gruppe F"],
+      "begin": "2014-06-21T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 65,
+    "fields": {
+      "match": 33,
+      "team": ["Argentinien"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 66,
+    "fields": {
+      "match": 33,
+      "team": ["Iran"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 34,
+    "fields": {
+      "event": ["Gruppe F"],
+      "begin": "2014-06-21T18:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 67,
+    "fields": {
+      "match": 34,
+      "team": ["Nigeria"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 68,
+    "fields": {
+      "match": 34,
+      "team": ["Bosnien-Herz."],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 35,
+    "fields": {
+      "event": ["Gruppe F"],
+      "begin": "2014-06-25T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 69,
+    "fields": {
+      "match": 35,
+      "team": ["Nigeria"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 70,
+    "fields": {
+      "match": 35,
+      "team": ["Argentinien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 36,
+    "fields": {
+      "event": ["Gruppe F"],
+      "begin": "2014-06-25T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 71,
+    "fields": {
+      "match": 36,
+      "team": ["Bosnien-Herz."],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 72,
+    "fields": {
+      "match": 36,
+      "team": ["Iran"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 37,
+    "fields": {
+      "event": ["Gruppe G"],
+      "begin": "2014-06-16T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 73,
+    "fields": {
+      "match": 37,
+      "team": ["Deutschland"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 74,
+    "fields": {
+      "match": 37,
+      "team": ["Portugal"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 38,
+    "fields": {
+      "event": ["Gruppe G"],
+      "begin": "2014-06-16T19:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 75,
+    "fields": {
+      "match": 38,
+      "team": ["Ghana"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 76,
+    "fields": {
+      "match": 38,
+      "team": ["USA"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 39,
+    "fields": {
+      "event": ["Gruppe G"],
+      "begin": "2014-06-21T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 77,
+    "fields": {
+      "match": 39,
+      "team": ["Deutschland"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 78,
+    "fields": {
+      "match": 39,
+      "team": ["Ghana"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 40,
+    "fields": {
+      "event": ["Gruppe G"],
+      "begin": "2014-06-22T18:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 79,
+    "fields": {
+      "match": 40,
+      "team": ["USA"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 80,
+    "fields": {
+      "match": 40,
+      "team": ["Portugal"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 41,
+    "fields": {
+      "event": ["Gruppe G"],
+      "begin": "2014-06-26T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 81,
+    "fields": {
+      "match": 41,
+      "team": ["USA"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 82,
+    "fields": {
+      "match": 41,
+      "team": ["Deutschland"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 42,
+    "fields": {
+      "event": ["Gruppe G"],
+      "begin": "2014-06-26T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 83,
+    "fields": {
+      "match": 42,
+      "team": ["Portugal"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 84,
+    "fields": {
+      "match": 42,
+      "team": ["Ghana"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 43,
+    "fields": {
+      "event": ["Gruppe H"],
+      "begin": "2014-06-17T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 85,
+    "fields": {
+      "match": 43,
+      "team": ["Belgien"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 86,
+    "fields": {
+      "match": 43,
+      "team": ["Algerien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 44,
+    "fields": {
+      "event": ["Gruppe H"],
+      "begin": "2014-06-17T18:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 87,
+    "fields": {
+      "match": 44,
+      "team": ["Russland"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 88,
+    "fields": {
+      "match": 44,
+      "team": ["Südkorea"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 45,
+    "fields": {
+      "event": ["Gruppe H"],
+      "begin": "2014-06-22T13:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 89,
+    "fields": {
+      "match": 45,
+      "team": ["Belgien"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 90,
+    "fields": {
+      "match": 45,
+      "team": ["Russland"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 46,
+    "fields": {
+      "event": ["Gruppe H"],
+      "begin": "2014-06-22T16:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 91,
+    "fields": {
+      "match": 46,
+      "team": ["Südkorea"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 92,
+    "fields": {
+      "match": 46,
+      "team": ["Algerien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 47,
+    "fields": {
+      "event": ["Gruppe H"],
+      "begin": "2014-06-26T17:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 93,
+    "fields": {
+      "match": 47,
+      "team": ["Südkorea"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 94,
+    "fields": {
+      "match": 47,
+      "team": ["Belgien"],
+      "rank": "2"
+    }
+  },
+  {
+    "model": "bet.match",
+    "pk": 48,
+    "fields": {
+      "event": ["Gruppe H"],
+      "begin": "2014-06-26T17:00:00-05:00",
+      "status": "1",
+      "has_overtime": "0",
+      "has_penalties": "0"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 95,
+    "fields": {
+      "match": 48,
+      "team": ["Algerien"],
+      "rank": "1"
+    }
+  },
+  {
+    "model": "bet.opponent",
+    "pk": 96,
+    "fields": {
+      "match": 48,
+      "team": ["Russland"],
+      "rank": "2"
+    }
+  }
+]

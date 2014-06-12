@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}all.css">
+            <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}desktop.css">
+            <title>
+                {% block title %}{% endblock %}
+            </title>
+            </head>
+        <body>
+            <header>
+                <div class="div-table">
+                    <div class="div-row">
+                        <div class="div-cell right_line" style="width: 50%">
+                            <h1><a href="{% url 'bet.views.games' %}">wm14</a></h1>
+                        </div>
+                        <div class="div-cell" style="text-align: right; vertical-align: middle">
+                            {% block toggle_login %}
+                                {% include "userauth/toggle_login.html" %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content">
+                <nav>
+                    <h2 style="text-align: left; vertical-align: middle">
+                        {% if body_id == 'games' %}
+                            <span>SPIELE |</span>
+                        {% else %}
+                            <a href="{% url 'bet.views.games' %}">SPIELE</a> |
+                        {% endif %}
+                        
+                        {% if body_id == 'bets' %}
+                            <span>TIPPS |</span>
+                        {% else %}
+                            <a href="{% url 'bet.views.bets' %}">TIPPS</a> | 
+                        {% endif %}
+                        
+                        {% if body_id == 'ranking' %}
+                            <span>WERTUNG |</span>
+                        {% else %}
+                            <a href="{% url 'bet.views.ranking' %}">WERTUNG</a> |
+                        {% endif %}
+                        
+                        {% if body_id == 'admin' %}
+                            <span style="color: white">ADMIN</span>
+                        {% else %}
+                            <span style="color: white">ADMIN</span>
+                        {% endif %}
+                    </h2>
+                </nav>
+
+                {% block content %}
+                {% endblock %}
+            </div>
+        </body>
+    </html>

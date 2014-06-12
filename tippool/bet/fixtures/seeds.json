@@ -1,0 +1,561 @@
+
+[
+  {
+    "model": "bet.status",
+    "pk": 1,
+    "fields": {
+      "key": 10,
+      "value": "scheduled"
+    }
+  },
+  {
+    "model": "bet.status",
+    "pk": 2,
+    "fields": {
+      "key": 20,
+      "value": "running"
+    }
+  },
+  {
+    "model": "bet.status",
+    "pk": 3,
+    "fields": {
+      "key": 30,
+      "value": "finished"
+    }
+  },
+  {
+    "model": "bet.status",
+    "pk": 4,
+    "fields": {
+      "key": 40,
+      "value": "cancelled"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 1,
+    "fields": {
+      "name": "Brasilien",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 2,
+    "fields": {
+      "name": "Kroatien",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 3,
+    "fields": {
+      "name": "Mexiko",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 4,
+    "fields": {
+      "name": "Kamerun",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 5,
+    "fields": {
+      "name": "Spanien",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 6,
+    "fields": {
+      "name": "Niederlande",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 7,
+    "fields": {
+      "name": "Chile",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 8,
+    "fields": {
+      "name": "Australien",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 9,
+    "fields": {
+      "name": "Kolumbien",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 10,
+    "fields": {
+      "name": "Griechenland",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 11,
+    "fields": {
+      "name": "Elfenbeinküste",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 12,
+    "fields": {
+      "name": "Japan",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 13,
+    "fields": {
+      "name": "Uruguay",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 14,
+    "fields": {
+      "name": "Costa Rica",
+      "logo": "",
+      "active": "1"
+    }
+  },  
+  {
+    "model": "bet.team",
+    "pk": 15,
+    "fields": {
+      "name": "England",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 16,
+    "fields": {
+      "name": "Italien",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 17,
+    "fields": {
+      "name": "Schweiz",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 18,
+    "fields": {
+      "name": "Ecuador",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 19,
+    "fields": {
+      "name": "Frankreich",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 20,
+    "fields": {
+      "name": "Südkorea",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 21,
+    "fields": {
+      "name": "Honduras",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 22,
+    "fields": {
+      "name": "Argentinien",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 23,
+    "fields": {
+      "name": "Bosnien-Herz.",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 24,
+    "fields": {
+      "name": "Iran",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 25,
+    "fields": {
+      "name": "Nigeria",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 26,
+    "fields": {
+      "name": "Deutschland",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 27,
+    "fields": {
+      "name": "Portugal",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 28,
+    "fields": {
+      "name": "Ghana",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 29,
+    "fields": {
+      "name": "USA",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 30,
+    "fields": {
+      "name": "Belgien",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 31,
+    "fields": {
+      "name": "Algerien",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.team",
+    "pk": 32,
+    "fields": {
+      "name": "Russland",
+      "logo": "",
+      "active": "1"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "richard.t",
+      "password": "pbkdf2_sha256$12000$fDRBjRtdUxVZ$1i/rdMvNpcxZe+6AWZkvjvcq2D2saSO+q4ClSpmkfnk="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "dietmar.p",
+      "password": "pbkdf2_sha256$12000$fDRBjRtdUxVZ$1i/rdMvNpcxZe+6AWZkvjvcq2D2saSO+q4ClSpmkfnk="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "manfred.k",
+      "password": "pbkdf2_sha256$12000$fDRBjRtdUxVZ$1i/rdMvNpcxZe+6AWZkvjvcq2D2saSO+q4ClSpmkfnk="
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "username": "clemens.h",
+      "password": "pbkdf2_sha256$12000$fDRBjRtdUxVZ$1i/rdMvNpcxZe+6AWZkvjvcq2D2saSO+q4ClSpmkfnk="
+    }
+  },
+  {
+    "model": "bet.betpool",
+    "pk": 1,
+    "fields": {
+      "label": "Tippool 1",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.betpool",
+    "pk": 2,
+    "fields": {
+      "label": "Tippool 2",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.event",
+    "pk": 1,
+    "fields": {
+      "label": "WM 14",
+      "status": 1
+    }
+  },
+  {
+    "model": "bet.event",
+    "pk": 2,
+    "fields": {
+      "label": "Gruppe A",
+      "parent": 1,
+      "status": 1
+    }
+  },
+  {
+    "model": "bet.event",
+    "pk": 3,
+    "fields": {
+      "label": "Gruppe B",
+      "parent": 1,
+      "status": 1
+    }
+  },
+  {
+    "model": "bet.event",
+    "pk": 4,
+    "fields": {
+      "label": "Gruppe C",
+      "parent": 1,
+      "status": 1
+    }
+  },
+  {
+    "model": "bet.event",
+    "pk": 5,
+    "fields": {
+      "label": "Gruppe D",
+      "parent": 1,
+      "status": 1
+    }
+  },
+  {
+    "model": "bet.event",
+    "pk": 6,
+    "fields": {
+      "label": "Gruppe E",
+      "parent": 1,
+      "status": 1
+    }
+  },
+  {
+    "model": "bet.event",
+    "pk": 7,
+    "fields": {
+      "label": "Gruppe F",
+      "parent": 1,
+      "status": 1
+    }
+  },
+  {
+    "model": "bet.event",
+    "pk": 8,
+    "fields": {
+      "label": "Gruppe G",
+      "parent": 1,
+      "status": 1
+    }
+  },
+  {
+    "model": "bet.event",
+    "pk": 9,
+    "fields": {
+      "label": "Gruppe H",
+      "parent": 1,
+      "status": 1
+    }
+  },
+  {
+    "model": "bet.scorerule",
+    "pk": 1,
+    "fields": {
+      "label": "Regel 1",
+      "one_two_draw": 1,
+      "regular": 2,
+      "overtime": 3,
+      "penalties": 5
+    }
+  },
+  {
+    "model": "bet.scorerule",
+    "pk": 2,
+    "fields": {
+      "label": "Regel 2",
+      "one_two_draw": 1,
+      "regular": 1,
+      "overtime": 2,
+      "penalties": 3
+    }
+  },
+  {
+    "model": "bet.poolevent",
+    "pk": 1,
+    "fields": {
+      "event": 1,
+      "betpool": 1,
+      "scorerule": 1
+    }
+  },
+  {
+    "model": "bet.poolevent",
+    "pk": 2,
+    "fields": {
+      "event": 2,
+      "betpool": 1,
+      "scorerule": 1
+    }
+  },
+  {
+    "model": "bet.membership",
+    "pk": 1,
+    "fields": {
+      "betpool": 1,
+      "user": 2,
+      "admin": "1",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.membership",
+    "pk": 2,
+    "fields": {
+      "betpool": 1,
+      "user": 3,
+      "admin": "0",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.membership",
+    "pk": 3,
+    "fields": {
+      "betpool": 1,
+      "user": 4,
+      "admin": "0",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.membership",
+    "pk": 4,
+    "fields": {
+      "betpool": 1,
+      "user": 5,
+      "admin": "0",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.membership",
+    "pk": 5,
+    "fields": {
+      "betpool": 2,
+      "user": 2,
+      "admin": "0",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.membership",
+    "pk": 6,
+    "fields": {
+      "betpool": 2,
+      "user": 4,
+      "admin": "1",
+      "active": "1"
+    }
+  },
+  {
+    "model": "bet.membership",
+    "pk": 7,
+    "fields": {
+      "betpool": 2,
+      "user": 5,
+      "admin": "0",
+      "active": "1"
+    }
+  }
+]

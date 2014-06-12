@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Tipps
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="small-gap"></div>
+
+<div class="subnav">
+    {% for bpool in betpools %}
+        {% if bpool == betpool %}
+            {{ bpool.label }} |
+        {% else %}
+            <a href="{% url 'bet.views.bets' bpool.id event.id %}">{{ bpool.label }}</a> |
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="subnav">Meine Tipps | alle Tipps</div>
+
+<div class="gap"></div>
+
+<h2>Tipps</h2>
+
+{% endblock %}
