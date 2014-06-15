@@ -211,31 +211,76 @@ img.left-spacer  {
     float: left;
 }
 
-.timetable {
+.timetable, .bettable {
     width: 60%;
 }
 
-.timetable div {
-    padding: 4px 8px 4px 0px;
+.timetable div, .bettable div {
+    padding: 2px 4px 2px 0px;
 }
 
-.timetable .div-cell{
+.timetable .div-cell, .bettable .div-cell{
     background-color: #F0F0F0;
 }
 
-.timetable-time{
+.even-row .div-cell{
+    background-color: #F5F5F5;
+}
+
+.odd-row .div-cell{
+    background-color: #F0F0F0;
+}
+
+.timetable-r1{
     width: 26%;
 }
 
-.timetable-team{
-    width: 30%;
+.timetable-r2{
+    width: 24%;
 }
 
-.timetable-spacer{
+.timetable-r3{
     width: 2%;
 }
 
-.timetable-tip{
-    width: 12%;
+.timetable-r4{
+    width: 38%;
 }
+
+.timetable-r5{
+    width: 10%;
+}
+
+.bettable-r1{
+    width: 26%;
+}
+
+.bettable-r2{
+    width: 17%;
+}
+
+.bettable-r3{
+    width: 2%;
+}
+
+.bettable-r4{
+    width: 17%;
+}
+
+.bettable-r5{
+    width: 10%;
+}
+
+.bettable-r6{
+    width: 10%;
+}
+
+.bettable-r7{
+    width: 10%;
+}
+
+.bettable-r8{
+    width: 8%;
+}
+
 

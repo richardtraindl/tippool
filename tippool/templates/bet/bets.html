@@ -38,22 +38,126 @@ Tipps
 
 <h2>Tipps für Spiele aus {{ event.label }}</h2>
 
-<div>
+<div class="div-table bettable">
         {% for matchbet in match_bets %}
-            {{ matchbet.match.begin }}  <br>
-            {{ matchbet.match.team1.name }} - {{ matchbet.match.team2.name }}  <br>
-            {{ matchbet.match.team1_score.regular }} - {{ matchbet.match.team2_score.regular }}  <br>
-            
-            {% for bet in matchbet.betlist %}
-                <span>***</span>
-                {{ bet.account.membership.user.username }}  <br>
-                {{ bet.overtime }}  <br>
-                {{ bet.penalties }}  <br>
-                {{ bet.rating }}  <br>
-                {{ bet.team1_score.regular }}  - {{ bet.team2_score.regular }}  <br>
-                {{ bet.team1_score.overtime }}  - {{ bet.team2_score.overtime }}  <br>
-                {{ bet.team1_score.penalties }}  - {{ bet.team2_score.penalties }}  <br>                
-            {% endfor %}
-        {% endfor %}
+            <div class="div-row huge-gap">
+                &nbsp;
+            </div>
+            <div class="div-row">
+                <div class="div-cell bettable-r1">
+                    {{ matchbet.match.begin | date:"d.m.Y, H:i" }}
+                </div>
+                <div class="div-cell right bettable-r2">
+                    {{ matchbet.match.team1.name }}
+                </div>
+                <div class="div-cell center bettable-r3">
+                    <span> : </span>
+                </div>
+                <div class="div-cell bettable-r4">
+                    {{ matchbet.match.team2.name }}
+                </div>
+                <div class="div-cell bettable-r5">
+                    <span> n. 90' </span>
+                </div>
+                <div class="div-cell bettable-r6">
+                    <span> n. Verl. </span>
+                </div>
+                <div class="div-cell bettable-r7">
+                    <span> Elfer </span>
+                </div>
+                <div class="div-cell bettable-r8">
+                    Pkte
+                </div>
+            </div>
+
+            <div class="div-row">
+                <div class="div-cell bettable-r1">
+                    Spielergebnis
+                </div>
+                <div class="div-cell right bettable-r2">
+                    &nbsp;
+                </div>
+                <div class="div-cell center bettable-r3">
+                    &nbsp;
+                </div>
+                <div class="div-cell bettable-r4">
+                    &nbsp;
+                </div>
+                <div class="div-cell bettable-r5">
+                    {% if matchbet.match.status == 30 and matchbet.match.team1_score.regular != None and matchbet.match.team2_score.regular != None %}
+                        {{ matchbet.match.team1_score.regular }}
+                        <span> : </span>
+                        {{ matchbet.match.team2_score.regular }}
+                    {% else %}
+                        <div>
+                            <span> - : - </span>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="div-cell bettable-r6">
+                    {% if  matchbet.match.has_overtime %}
+                        {% if  matchbet.match.status == 30 and matchbet.match.team1_score.overtime != None and matchbet.match.team2_score.overtime != None %}
+                            {{ matchbet.match.team1_score.overtime }}
+                            <span> : </span>
+                            {{ matchbet.match.team2_score.overtime }}
+                        {% else %}
+                            <div>
+                                <span> - : - </span>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="div-cell bettable-r7">
+                    {% if matchbet.match.has_penalties %}
+                        {% if  matchbet.match.status == 30 and matchbet.match.team1_score.penalties != None and matchbet.match.team2_score.penalties != None %}
+                            {{ matchbet.match.team1_score.penalties }}
+                            <span> : </span>
+                            {{ matchbet.match.team2_score.penalties }}
+                        {% else %}
+                            <div>
+                                <span> - : - </span>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="div-cell bettable-r8">
+                    -
+                </div>
+            </div>
+        
+        {% for bet in matchbet.betlist %}
+            <div class="div-row {% cycle 'even-row' 'odd-row' %}">
+                <div class="div-cell bettable-r1">
+                    {{ bet.account.membership.user.username }}
+                </div>
+                <div class="div-cell right bettable-r2">
+                    &nbsp;
+                </div>
+                <div class="div-cell center bettable-r3">
+                    &nbsp;
+                </div>
+                <div class="div-cell bettable-r4">
+                    &nbsp;
+                </div>
+                <div class="div-cell bettable-r5">
+                    {{ bet.team1_score.regular }} - {{ bet.team2_score.regular }}
+                </div>
+                <div class="div-cell bettable-r6">
+                    {% if bet.overtime %}
+                        {{ bet.team1_score.overtime }} - {{ bet.team2_score.overtime }}
+                    {% endif %}
+                </div>
+                <div class="div-cell bettable-r7">
+                    {% if bet.penalties %}
+                        {{ bet.team1_score.penalties }} - {{ bet.team2_score.penalties }}
+                    {% endif %}
+                </div>
+                <div class="div-cell bettable-r8">
+                    {{ bet.rating }}
+                </div>
+            </div>
+        {% endfor %}        
+
+    {% endfor %}
 </div>
 {% endblock %}
