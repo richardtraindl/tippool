@@ -1,38 +1,6 @@
 
 [
   {
-    "model": "bet.status",
-    "pk": 1,
-    "fields": {
-      "key": 10,
-      "value": "scheduled"
-    }
-  },
-  {
-    "model": "bet.status",
-    "pk": 2,
-    "fields": {
-      "key": 20,
-      "value": "running"
-    }
-  },
-  {
-    "model": "bet.status",
-    "pk": 3,
-    "fields": {
-      "key": 30,
-      "value": "finished"
-    }
-  },
-  {
-    "model": "bet.status",
-    "pk": 4,
-    "fields": {
-      "key": 40,
-      "value": "cancelled"
-    }
-  },
-  {
     "model": "bet.team",
     "pk": 1,
     "fields": {
@@ -353,7 +321,7 @@
     }
   },
   {
-    "model": "bet.betpool",
+    "model": "bet.pool",
     "pk": 1,
     "fields": {
       "label": "Tippool 1",
@@ -361,7 +329,7 @@
     }
   },
   {
-    "model": "bet.betpool",
+    "model": "bet.pool",
     "pk": 2,
     "fields": {
       "label": "Tippool 2",
@@ -373,7 +341,7 @@
     "pk": 1,
     "fields": {
       "label": "WM 14",
-      "status": 1
+      "status": 10
     }
   },
   {
@@ -382,7 +350,7 @@
     "fields": {
       "label": "Gruppe A",
       "parent": 1,
-      "status": 1
+      "status": 10
     }
   },
   {
@@ -391,7 +359,7 @@
     "fields": {
       "label": "Gruppe B",
       "parent": 1,
-      "status": 1
+      "status": 10
     }
   },
   {
@@ -400,7 +368,7 @@
     "fields": {
       "label": "Gruppe C",
       "parent": 1,
-      "status": 1
+      "status": 10
     }
   },
   {
@@ -409,7 +377,7 @@
     "fields": {
       "label": "Gruppe D",
       "parent": 1,
-      "status": 1
+      "status": 10
     }
   },
   {
@@ -418,7 +386,7 @@
     "fields": {
       "label": "Gruppe E",
       "parent": 1,
-      "status": 1
+      "status": 10
     }
   },
   {
@@ -427,7 +395,7 @@
     "fields": {
       "label": "Gruppe F",
       "parent": 1,
-      "status": 1
+      "status": 10
     }
   },
   {
@@ -436,7 +404,7 @@
     "fields": {
       "label": "Gruppe G",
       "parent": 1,
-      "status": 1
+      "status": 10
     }
   },
   {
@@ -445,7 +413,7 @@
     "fields": {
       "label": "Gruppe H",
       "parent": 1,
-      "status": 1
+      "status": 10
     }
   },
   {
@@ -474,8 +442,8 @@
     "model": "bet.poolevent",
     "pk": 1,
     "fields": {
-      "event": 1,
-      "betpool": 1,
+      "event": ["WM 14"],
+      "pool": 1,
       "scorerule": 1
     }
   },
@@ -483,8 +451,35 @@
     "model": "bet.poolevent",
     "pk": 2,
     "fields": {
-      "event": 2,
-      "betpool": 1,
+      "event": ["Gruppe A"],
+      "pool": 1,
+      "scorerule": 1
+    }
+  },
+  {
+    "model": "bet.poolevent",
+    "pk": 3,
+    "fields": {
+      "event": ["Gruppe H"],
+      "pool": 1,
+      "scorerule": 1
+    }
+  },
+  {
+    "model": "bet.poolevent",
+    "pk": 4,
+    "fields": {
+      "event": ["WM 14"],
+      "pool": 2,
+      "scorerule": 1
+    }
+  },
+  {
+    "model": "bet.poolevent",
+    "pk": 5,
+    "fields": {
+      "event": ["Gruppe G"],
+      "pool": 2,
       "scorerule": 1
     }
   },
@@ -492,7 +487,7 @@
     "model": "bet.membership",
     "pk": 1,
     "fields": {
-      "betpool": 1,
+      "pool": 1,
       "user": 2,
       "admin": "1",
       "active": "1"
@@ -502,7 +497,7 @@
     "model": "bet.membership",
     "pk": 2,
     "fields": {
-      "betpool": 1,
+      "pool": 1,
       "user": 3,
       "admin": "0",
       "active": "1"
@@ -512,7 +507,7 @@
     "model": "bet.membership",
     "pk": 3,
     "fields": {
-      "betpool": 1,
+      "pool": 1,
       "user": 4,
       "admin": "0",
       "active": "1"
@@ -522,7 +517,7 @@
     "model": "bet.membership",
     "pk": 4,
     "fields": {
-      "betpool": 1,
+      "pool": 1,
       "user": 5,
       "admin": "0",
       "active": "1"
@@ -532,7 +527,7 @@
     "model": "bet.membership",
     "pk": 5,
     "fields": {
-      "betpool": 2,
+      "pool": 2,
       "user": 2,
       "admin": "0",
       "active": "1"
@@ -542,7 +537,7 @@
     "model": "bet.membership",
     "pk": 6,
     "fields": {
-      "betpool": 2,
+      "pool": 2,
       "user": 4,
       "admin": "1",
       "active": "1"
@@ -552,10 +547,187 @@
     "model": "bet.membership",
     "pk": 7,
     "fields": {
-      "betpool": 2,
+      "pool": 2,
       "user": 5,
       "admin": "0",
       "active": "1"
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 1,
+    "fields": {
+      "membership": 1,
+      "poolevent": 1,
+      "rating": "0"
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 2,
+    "fields": {
+      "membership": 2,
+      "poolevent": 1,
+      "rating": "0"
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 3,
+    "fields": {
+      "membership": 3,
+      "poolevent": 1,
+      "rating": "0"
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 1,
+    "fields": {
+      "membership": 4,
+      "poolevent": 1,
+      "rating": "0"
+    }
+  },
+ {
+    "model": "bet.account",
+    "pk": 1,
+    "fields": {
+      "membership": 1,
+      "poolevent": 2,
+      "rating": "0"
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 2,
+    "fields": {
+      "membership": 2,
+      "poolevent": 2,
+      "rating": "0"
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 3,
+    "fields": {
+      "membership": 3,
+      "poolevent": 2,
+      "rating": "0"
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 4,
+    "fields": {
+      "membership": 4,
+      "poolevent": 2,
+      "rating": "0"
+    }
+  },
+ {
+    "model": "bet.account",
+    "pk": 5,
+    "fields": {
+      "membership": 1,
+      "poolevent": 3,
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 6,
+    "fields": {
+      "membership": 2,
+      "poolevent": 3,
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 7,
+    "fields": {
+      "membership": 3,
+      "poolevent": 3,
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 8,
+    "fields": {
+      "membership": 4,
+      "poolevent": 3,
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 9,
+    "fields": {
+      "membership": 5,
+      "poolevent": 4,
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 10,
+    "fields": {
+      "membership": 6,
+      "poolevent": 4,
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 11,
+    "fields": {
+      "membership": 7,
+      "poolevent": 4,
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 12,
+    "fields": {
+      "membership": 5,
+      "poolevent": 5,
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 13,
+    "fields": {
+      "membership": 6,
+      "poolevent": 5,
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 14,
+    "fields": {
+      "membership": 7,
+      "poolevent": 5,
+      "rating": 0
+    }
+  },
+  { "model": "bet.score", "pk": 97, "fields": { "id": 97 } },
+  { "model": "bet.score", "pk": 98, "fields": { "id": 98 } },
+  {
+    "model": "bet.bet",
+    "pk": 1,
+    "fields": {
+      "account": 14,
+      "match": 37,
+      "overtime": "0",
+      "penalties": "0",
+      "rating": 0,
+      "team1_score": 97,
+      "team2_score": 98
     }
   }
 ]

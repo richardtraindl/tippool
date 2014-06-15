@@ -12,19 +12,48 @@ Tipps
 <div class="small-gap"></div>
 
 <div class="subnav">
-    {% for bpool in betpools %}
-        {% if bpool == betpool %}
-            {{ bpool.label }} |
+    {% for pl in pools %}
+        {% if pl == pool %}
+            {{ pl.label }} |
         {% else %}
-            <a href="{% url 'bet.views.bets' bpool.id event.id %}">{{ bpool.label }}</a> |
+            <a href="{% url 'bet.views.bets' pl.id %}">{{ pl.label }}</a> |
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="subnav">
+    {% for evt in events %}
+        {% if evt == event %}
+            {{ evt.label }} |
+        {% else %}
+            <a href="{% url 'bet.views.bets' pool.id evt.id %}">{{ evt.label }}</a> |
         {% endif %}
     {% endfor %}
 </div>
 
 <div class="subnav">Meine Tipps | alle Tipps</div>
 
+
 <div class="gap"></div>
 
-<h2>Tipps</h2>
+<h2>Tipps für Spiele aus {{ event.label }}</h2>
 
+<div>
+        {% for matchbet in match_bets %}
+            {{ matchbet.match.begin }}  <br>
+            {{ matchbet.match.team1.name }} - {{ matchbet.match.team2.name }}  <br>
+            {{ matchbet.match.team1_score.regular }} - {{ matchbet.match.team2_score.regular }}  <br>
+            
+            {% for bet in matchbet.betlist %}
+                <span>***</span>
+                {{ bet.account.membership.user.username }}  <br>
+                {{ bet.overtime }}  <br>
+                {{ bet.penalties }}  <br>
+                {{ bet.rating }}  <br>
+                {{ bet.team1_score.regular }}  - {{ bet.team2_score.regular }}  <br>
+                {{ bet.team1_score.overtime }}  - {{ bet.team2_score.overtime }}  <br>
+                {{ bet.team1_score.penalties }}  - {{ bet.team2_score.penalties }}  <br>                
+            {% endfor %}
+        {% endfor %}
+</div>
 {% endblock %}

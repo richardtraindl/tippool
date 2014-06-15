@@ -11,12 +11,18 @@ from django.contrib.auth.models import User, Group
 
 
 
-class Status(models.Model):
-    key = models.IntegerField(null=False, unique=True)
-    value = models.CharField(max_length=100, null=False)
-    
+class Status(object):
+    def __init__(self, key=None, value=None):
+        self.key = key
+        self.value = value
+
     def __unicode__(self): 
         return self.value
+
+status_scheduled = Status(10, "scheduled")
+status_running   = Status(20, "running")
+status_finished  = Status(30, "finished")
+status_cancelled = Status(40, "cancelled")
 
 
 
@@ -32,7 +38,7 @@ class ScoreRule(models.Model):
 
 
 
-class Betpool(models.Model):
+class Pool(models.Model):
     label = models.CharField(max_length=100, unique=True)
     active = models.BooleanField(default=True)
     users = models.ManyToManyField(User, through='Membership')
@@ -43,13 +49,13 @@ class Betpool(models.Model):
 
 
 class Membership(models.Model):
-    betpool = models.ForeignKey(Betpool)
+    pool = models.ForeignKey(Pool)
     user = models.ForeignKey(User)
     admin = models.BooleanField(null=False, default=False)
     active = models.BooleanField(null=False, default=True)
 
     def __unicode__(self):
-        return self.betpool.label + "/" + self.user.username 
+        return self.pool.label + "/" + self.user.username 
 
 
 
@@ -61,28 +67,41 @@ class Event(models.Model):
     objects = EventManager()
 
     label = models.CharField(max_length=100, unique=True,  null=False)
-    status = models.ForeignKey(Status)
+    status = models.IntegerField(null=False)
     parent = models.ForeignKey('self', null=True)
     active = models.BooleanField(default=True)
-    betpools = models.ManyToManyField(Betpool, through='PoolEvent')
+    pools = models.ManyToManyField(Pool, through='PoolEvent')
 
     def __unicode__(self): 
         return self.label
 
 
 class PoolEvent(models.Model):
-    betpool = models.ForeignKey(Betpool)
+    pool = models.ForeignKey(Pool)
     event = models.ForeignKey(Event)
     scorerule = models.ForeignKey(ScoreRule)
 
     def __unicode__(self):
-        return self.betpool.label + '-' + self.event.label
+        return self.pool.label + '-' + self.event.label
 
+
+
+class AccountManager(models.Manager):
+    def get_by_natural_key(self, name):
+        return self.get(name=name)
 
 class Account(models.Model):
+    objects = AccountManager()
+
     membership = models.ForeignKey(Membership)
     poolevent = models.ForeignKey(PoolEvent)
     rating = models.IntegerField(null=True)
+
+    def __unicode__(self):
+        return  self.poolevent.pool.label + " / " + \
+                self.poolevent.event.label + " / " + \
+                self.membership.pool.label + " / " + \
+                self.membership.user.username
 
 
 
@@ -102,48 +121,58 @@ class Team(models.Model):
 
 
 
+class ScoreManager(models.Manager):
+    def get_by_natural_key(self, id):
+        return self.get(id=id)
+
+class Score(models.Model):
+    objects = ScoreManager()
+
+    regular = models.IntegerField(null=True)
+    overtime = models.IntegerField(null=True)
+    penalties = models.IntegerField(null=True)
+
+    def __unicode__(self):
+        return str(self.id)
+
+
+
 class Match(models.Model):
     event = models.ForeignKey(Event)
     begin = models.DateTimeField()
-    status = models.ForeignKey(Status)
+    status = models.IntegerField(null=False)
     has_overtime = models.BooleanField(null=False, default=False)
     has_penalties = models.BooleanField(null=False, default=False)
-    teams = models.ManyToManyField(Team, through='Opponent')
+    team1 = models.ForeignKey(Team, related_name='match_team1')
+    team1_score = models.ForeignKey(Score, related_name='match_team1_score')
+    team2 = models.ForeignKey(Team, related_name='match_team2')
+    team2_score = models.ForeignKey(Score, related_name='match_team2_score')
 
     def __unicode__(self): 
-        opp1 = Opponent.objects.get(match_id=self.id, rank=1)
-        opp2 = Opponent.objects.get(match_id=self.id, rank=2)
-        if opp1 == None or opp2 == None:
-            return self.begin.strftime('%m.%d.%Y')
-        else:
-            return self.begin.strftime('%m.%d.%Y') + " - " + opp1.team.name + " : " + opp2.team.name
+        return self.begin.strftime('%m.%d.%Y') + " - " + self.team1.name + " : " + self.team2.name
 
 
 
-class Opponent(models.Model):
-    match = models.ForeignKey(Match)
-    team = models.ForeignKey(Team)
-    rank = models.IntegerField(default=1)
-    score_regular = models.IntegerField(null=True)
-    score_overtime = models.IntegerField(null=True)
-    score_penalties = models.IntegerField(null=True)
 
+class BetManager(models.Manager):
+    def get_by_natural_key(self, name):
+        return self.get(name=name)
 
 class Bet(models.Model):
+    objects = BetManager()
+
     account= models.ForeignKey(Account)
     match= models.ForeignKey(Match)
-    teams = models.ManyToManyField(Team, through='BetOpponent')
     overtime= models.BooleanField(null=False, default=False)
     penalties = models.BooleanField(null=False, default=False)
     rating = models.IntegerField(null=True)
+    team1_score = models.ForeignKey(Score, related_name='bet_team1_score')
+    team2_score = models.ForeignKey(Score, related_name='bet_team2_score')
 
-
-class BetOpponent(models.Model):
-    bet = models.ForeignKey(Bet)
-    team = models.ForeignKey(Team)
-    rank = models.IntegerField(default=1, unique=True)
-    score_regular = models.IntegerField(null=False)
-    score_overtime = models.IntegerField(null=True)
-    score_penalties = models.IntegerField(null=True)
-
+    def __unicode__(self):
+        return  self.account.poolevent.pool.label + " / " + \
+                self.account.poolevent.event.label + " / " + \
+                self.match.team1.name + " - " + \
+                self.match.team2.name + " / " + \
+                self.account.membership.user.username
 
