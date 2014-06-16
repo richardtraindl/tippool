@@ -224,11 +224,11 @@ img.left-spacer  {
 }
 
 .even-row .div-cell{
-    background-color: #F5F5F5;
+    background-color: #F0FFF0;
 }
 
 .odd-row .div-cell{
-    background-color: #F0F0F0;
+    background-color: #DCDCDC;
 }
 
 .timetable-r1{

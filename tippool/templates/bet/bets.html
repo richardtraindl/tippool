@@ -45,6 +45,7 @@ Tipps
             </div>
             <div class="div-row">
                 <div class="div-cell bettable-r1">
+                    <span class="toggle-bets">>></span>
                     {{ matchbet.match.begin | date:"d.m.Y, H:i" }}
                 </div>
                 <div class="div-cell right bettable-r2">
@@ -126,7 +127,7 @@ Tipps
             </div>
         
         {% for bet in matchbet.betlist %}
-            <div class="div-row {% cycle 'even-row' 'odd-row' %}">
+            <div class="div-row bets {% cycle 'even-row' 'odd-row' %}">
                 <div class="div-cell bettable-r1">
                     {{ bet.account.membership.user.username }}
                 </div>
@@ -157,7 +158,6 @@ Tipps
                 </div>
             </div>
         {% endfor %}        
-
     {% endfor %}
 </div>
 {% endblock %}
