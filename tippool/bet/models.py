@@ -26,6 +26,20 @@ status_cancelled = Status(40, "cancelled")
 
 
 
+class Winner(object):
+    def __init__(self, key=None, value=None):
+        self.key = key
+        self.value = value
+
+    def __unicode__(self): 
+        return self.value
+
+winner_none  = Winner(0, "none")
+winner_team1 = Winner(1, "team1")
+winner_team2   = Winner(2, "team2")
+
+
+
 class ScoreRule(models.Model):
     label = models.CharField(max_length=100, unique=True)
     one_two_draw = models.IntegerField(null=False, default=0)
@@ -121,22 +135,6 @@ class Team(models.Model):
 
 
 
-class ScoreManager(models.Manager):
-    def get_by_natural_key(self, id):
-        return self.get(id=id)
-
-class Score(models.Model):
-    objects = ScoreManager()
-
-    regular = models.IntegerField(null=True)
-    overtime = models.IntegerField(null=True)
-    penalties = models.IntegerField(null=True)
-
-    def __unicode__(self):
-        return str(self.id)
-
-
-
 class Match(models.Model):
     event = models.ForeignKey(Event)
     begin = models.DateTimeField()
@@ -144,12 +142,17 @@ class Match(models.Model):
     has_overtime = models.BooleanField(null=False, default=False)
     has_penalties = models.BooleanField(null=False, default=False)
     team1 = models.ForeignKey(Team, related_name='match_team1')
-    team1_score = models.ForeignKey(Score, related_name='match_team1_score')
+    team1_score_regular = models.IntegerField(null=True, blank=True)
+    team1_score_overtime = models.IntegerField(null=True, blank=True)
+    team1_score_penalties = models.IntegerField(null=True, blank=True)
     team2 = models.ForeignKey(Team, related_name='match_team2')
-    team2_score = models.ForeignKey(Score, related_name='match_team2_score')
+    team2_score_regular = models.IntegerField(null=True, blank=True)
+    team2_score_overtime = models.IntegerField(null=True, blank=True)
+    team2_score_penalties = models.IntegerField(null=True, blank=True)
+    winner = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self): 
-        return self.begin.strftime('%m.%d.%Y') + " - " + self.team1.name + " : " + self.team2.name
+        return self.begin.strftime('%d.%m.%Y') + "/" + "/" + self.event.label  +  "/" + self.team1.name + " : " + self.team2.name
 
 
 
@@ -165,9 +168,14 @@ class Bet(models.Model):
     match= models.ForeignKey(Match)
     overtime= models.BooleanField(null=False, default=False)
     penalties = models.BooleanField(null=False, default=False)
-    rating = models.IntegerField(null=True)
-    team1_score = models.ForeignKey(Score, related_name='bet_team1_score')
-    team2_score = models.ForeignKey(Score, related_name='bet_team2_score')
+    team1_score_regular = models.IntegerField(null=False)
+    team1_score_overtime = models.IntegerField(null=True, blank=True)
+    team1_score_penalties = models.IntegerField(null=True, blank=True)
+    team2_score_regular = models.IntegerField(null=False)
+    team2_score_overtime = models.IntegerField(null=True, blank=True)
+    team2_score_penalties = models.IntegerField(null=True, blank=True)
+    winner = models.IntegerField(null=True, blank=True)
+    rating = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
         return  self.account.poolevent.pool.label + " / " + \

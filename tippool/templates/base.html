@@ -13,7 +13,7 @@
             <script>
                 $(document).ready(function(){
                   $(".toggle-bets").click(function(){
-                    $(".bets").toggle(1000);
+                    $(this).parents(".bettable").find(".bets").toggle(1000);
                   });
                 });
             </script>

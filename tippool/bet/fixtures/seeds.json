@@ -714,20 +714,5 @@
       "poolevent": 5,
       "rating": 0
     }
-  },
-  { "model": "bet.score", "pk": 97, "fields": { "id": 97 } },
-  { "model": "bet.score", "pk": 98, "fields": { "id": 98 } },
-  {
-    "model": "bet.bet",
-    "pk": 1,
-    "fields": {
-      "account": 14,
-      "match": 37,
-      "overtime": "0",
-      "penalties": "0",
-      "rating": 0,
-      "team1_score": 97,
-      "team2_score": 98
-    }
   }
 ]
