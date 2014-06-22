@@ -36,7 +36,6 @@ Tipps
 
 <div class="gap"></div>
 
-<a href="/bet/add_bet/">Add a New Bet</a>
 
 <h2>Tipps für Spiele aus {{ event.label }}</h2>
 
@@ -156,7 +155,13 @@ Tipps
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r8">
-                    {{ bet.rating }}
+                    {% if bet.match.status == 10 %}
+                        {% if bet.account.membership.user_id == user.id %}
+                            <a href="/bet/add_bet/{{pool.id}}/{{bet.match.id}}">tippen</a>
+                        {% endif %}
+                    {% else %}
+                        {{ bet.rating }}                    
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}

@@ -45,8 +45,8 @@ Spiele
                     {{ match.team2.name }}
                 </div>
                 <div class="div-cell timetable-r5">
-                    {% if match.status == 10 %}
-                        <a href=#>tippen</a>
+                    {% if match.status == 10 and pool.membership.user_id == user.id %}
+                        <a href="/bet/add_bet/{{match.id}}/{{pool.id}}">tippen</a>
                     {% else %}
                         tippen
                     {% endif %}

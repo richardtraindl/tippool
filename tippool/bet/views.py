@@ -8,34 +8,6 @@ from bet.forms import BetForm
 
 
 
-def add_bet(request):
-    # Get the context from the request.
-    context = RequestContext(request)
-
-    # A HTTP POST?
-    if request.method == 'POST':
-        form = BetForm(request.POST)
-
-        # Have we been provided with a valid form?
-        if form.is_valid():
-            # Save the new category to the database.
-            form.save(commit=True)
-
-            # Now call the index() view.
-            # The user will be shown the homepage.
-            return bets(request)
-        else:
-            # The supplied form contained errors - just print them to the terminal.
-            print form.errors
-    else:
-        # If the request was not a POST, display the form to enter details.
-        form = BetForm()
-
-    # Bad form (or form details), no form supplied...
-    # Render the form with error messages (if any).
-    return render_to_response('bet/add_bet.html', {'form': form}, context)
-
-
 
 class MatchBets(object):
     def __init__(self, match=None):
@@ -53,7 +25,7 @@ def bets(request, req_pool=1, req_event=1):
 
     # pool
     if req_pool == None:
-        pool = Pool.objects.get(membership__user__id=request.user.id, active=True)
+        pool = Pool.objects.filter(membership__user__id=request.user.id, active=True)[:1].get()
     else:
         pool = Pool.objects.get(id=req_pool)
 
@@ -78,7 +50,7 @@ def bets(request, req_pool=1, req_event=1):
         match_bet = MatchBets(match)
 
         try:
-            bets = Bet.objects.filter(match__id=match.id, account__poolevent__pool__id=pool.id)
+            bets = Bet.objects.filter(match__id=match.id, account__membership__pool__id=pool.id)
             match_bet.add_bet(bets)
         except Bet.DoesNotExist:
             continue
@@ -87,7 +59,7 @@ def bets(request, req_pool=1, req_event=1):
 
         
 
-    return render(request, 'bet/bets.html', {'body_id': 'bets', 'pool': pool, 'pools': pools, 'event': event, 'events': events, 'match_bets': match_bets } )
+    return render(request, 'bet/bets.html', {'body_id': 'bets', 'pool': pool, 'pools': pools, 'event': event, 'events': events, 'match_bets': match_bets, 'user': request.user } )
 
 
 
@@ -108,5 +80,70 @@ def games(request, req_event=1):
 
     matches = Match.objects.all().filter(event_id=event.id)
 
-    return render_to_response('bet/games.html', {'body_id': 'games', 'event': event, 'events': events, 'matches': matches }, context )
+    pool = Pool.objects.filter(membership__user__id=request.user.id, active=True)[1:].get()
 
+    return render_to_response('bet/games.html', {'body_id': 'games', 'event': event, 'events': events, 'matches': matches, 'pool': pool, 'user': request.user }, context )
+
+
+
+def add_bet(request, req_pool=1, req_match=1):
+    # Get the context from the request.
+    context = RequestContext(request)
+
+    # A HTTP POST?
+    if request.method == 'POST':
+        pool_id = request.POST['pool']
+        match_id = request.POST['match']
+        bet_id = request.POST['bet']
+
+        match = Match.objects.get(id=match_id)
+        bet = Bet.objects.get(id=bet_id)
+
+        form = BetForm(request.POST, instance=bet)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect("/bet/bets/" + str(pool_id) + "/" + str(match.event_id))
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            print form.errors
+            return HttpResponse(form.errors)
+    else:
+        # If the request was not a POST, display the form to enter details.
+        form = BetForm()
+
+        if req_match == None:
+            match = Match.objects.filter(status=10, event__poolevent__membership__user__id=request.user.id)[:1].get()
+        else:
+            match = Match.objects.get(id=req_match)
+
+        pools = Pool.objects.filter(membership__user__id=request.user.id, poolevent__event__match__id=match.id)
+
+        if req_pool == None:
+            pool = pools[0]
+        else:
+            pool = Pool.objects.get(id=req_pool)
+
+        try:
+            membership = Membership.objects.get(pool_id=pool.id, user_id=request.user.id)
+        except Membership.DoesNotExist:
+            print("error membership")
+            return HttpResponse("<html></html>")
+
+        try:
+            account = Account.objects.get(membership_id=membership.id, event__match__id=match.id)
+        except Account.DoesNotExist:
+            event = Event.objects.get(id=match.event_id)
+            account = Account(membership.id, event.id, None)
+            account.save
+
+        try:
+            bet = Bet.objects.get(account_id=account.id, match_id=match.id)
+        except Bet.DoesNotExist:
+            bet = Bet(account.id, match.id, False, False, 0, None, None, 0, None, None, None, None)
+            bet.account_id = account.id
+            bet.match_id = match.id
+            bet.team1_score_regular = 0
+            bet.team2_score_regular = 0
+            bet.save()
+
+        return render_to_response('bet/add_bet.html', {'form': form, 'body_id': 'add_bet', 'bet': bet, 'match': match, 'pool': pool }, context)

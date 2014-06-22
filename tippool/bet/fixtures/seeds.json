@@ -558,7 +558,7 @@
     "pk": 1,
     "fields": {
       "membership": 1,
-      "poolevent": 1,
+      "event": ["Gruppe A"],
       "rating": "0"
     }
   },
@@ -567,7 +567,7 @@
     "pk": 2,
     "fields": {
       "membership": 2,
-      "poolevent": 1,
+      "event": ["Gruppe A"],
       "rating": "0"
     }
   },
@@ -576,7 +576,7 @@
     "pk": 3,
     "fields": {
       "membership": 3,
-      "poolevent": 1,
+      "event": ["Gruppe A"],
       "rating": "0"
     }
   },
@@ -585,7 +585,7 @@
     "pk": 1,
     "fields": {
       "membership": 4,
-      "poolevent": 1,
+      "event": ["Gruppe A"],
       "rating": "0"
     }
   },
@@ -594,7 +594,7 @@
     "pk": 1,
     "fields": {
       "membership": 1,
-      "poolevent": 2,
+      "event": ["Gruppe A"],
       "rating": "0"
     }
   },
@@ -603,7 +603,7 @@
     "pk": 2,
     "fields": {
       "membership": 2,
-      "poolevent": 2,
+      "event": ["Gruppe B"],
       "rating": "0"
     }
   },
@@ -612,7 +612,7 @@
     "pk": 3,
     "fields": {
       "membership": 3,
-      "poolevent": 2,
+      "event": ["Gruppe B"],
       "rating": "0"
     }
   },
@@ -621,7 +621,7 @@
     "pk": 4,
     "fields": {
       "membership": 4,
-      "poolevent": 2,
+      "event": ["Gruppe B"],
       "rating": "0"
     }
   },
@@ -630,7 +630,7 @@
     "pk": 5,
     "fields": {
       "membership": 1,
-      "poolevent": 3,
+      "event": ["Gruppe C"],
       "rating": 0
     }
   },
@@ -639,7 +639,7 @@
     "pk": 6,
     "fields": {
       "membership": 2,
-      "poolevent": 3,
+      "event": ["Gruppe C"],
       "rating": 0
     }
   },
@@ -648,7 +648,7 @@
     "pk": 7,
     "fields": {
       "membership": 3,
-      "poolevent": 3,
+      "event": ["Gruppe C"],
       "rating": 0
     }
   },
@@ -657,7 +657,7 @@
     "pk": 8,
     "fields": {
       "membership": 4,
-      "poolevent": 3,
+      "event": ["Gruppe C"],
       "rating": 0
     }
   },
@@ -666,7 +666,7 @@
     "pk": 9,
     "fields": {
       "membership": 5,
-      "poolevent": 4,
+      "event": ["Gruppe C"],
       "rating": 0
     }
   },
@@ -675,7 +675,7 @@
     "pk": 10,
     "fields": {
       "membership": 6,
-      "poolevent": 4,
+      "event": ["Gruppe C"],
       "rating": 0
     }
   },
@@ -684,7 +684,7 @@
     "pk": 11,
     "fields": {
       "membership": 7,
-      "poolevent": 4,
+      "event": ["Gruppe C"],
       "rating": 0
     }
   },
@@ -693,7 +693,7 @@
     "pk": 12,
     "fields": {
       "membership": 5,
-      "poolevent": 5,
+      "event": ["Gruppe D"],
       "rating": 0
     }
   },
@@ -702,7 +702,7 @@
     "pk": 13,
     "fields": {
       "membership": 6,
-      "poolevent": 5,
+      "event": ["Gruppe D"],
       "rating": 0
     }
   },
@@ -711,7 +711,115 @@
     "pk": 14,
     "fields": {
       "membership": 7,
-      "poolevent": 5,
+      "event": ["Gruppe D"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 15,
+    "fields": {
+      "membership": 5,
+      "event": ["Gruppe E"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 16,
+    "fields": {
+      "membership": 6,
+      "event": ["Gruppe E"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 17,
+    "fields": {
+      "membership": 7,
+      "event": ["Gruppe E"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 18,
+    "fields": {
+      "membership": 5,
+      "event": ["Gruppe F"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 19,
+    "fields": {
+      "membership": 6,
+      "event": ["Gruppe F"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 20,
+    "fields": {
+      "membership": 7,
+      "event": ["Gruppe F"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 21,
+    "fields": {
+      "membership": 5,
+      "event": ["Gruppe G"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 22,
+    "fields": {
+      "membership": 6,
+      "event": ["Gruppe G"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 23,
+    "fields": {
+      "membership": 7,
+      "event": ["Gruppe G"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 24,
+    "fields": {
+      "membership": 5,
+      "event": ["Gruppe H"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 25,
+    "fields": {
+      "membership": 6,
+      "event": ["Gruppe H"],
+      "rating": 0
+    }
+  },
+  {
+    "model": "bet.account",
+    "pk": 26,
+    "fields": {
+      "membership": 7,
+      "event": ["Gruppe H"],
       "rating": 0
     }
   }

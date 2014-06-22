@@ -68,6 +68,9 @@ class Membership(models.Model):
     admin = models.BooleanField(null=False, default=False)
     active = models.BooleanField(null=False, default=True)
 
+    class Meta:
+        unique_together = (("pool", "user"),)
+
     def __unicode__(self):
         return self.pool.label + "/" + self.user.username 
 
@@ -95,6 +98,9 @@ class PoolEvent(models.Model):
     event = models.ForeignKey(Event)
     scorerule = models.ForeignKey(ScoreRule)
 
+    class Meta:
+        unique_together = (("pool", "event"),)
+
     def __unicode__(self):
         return self.pool.label + '-' + self.event.label
 
@@ -108,14 +114,16 @@ class Account(models.Model):
     objects = AccountManager()
 
     membership = models.ForeignKey(Membership)
-    poolevent = models.ForeignKey(PoolEvent)
+    event = models.ForeignKey(Event)
     rating = models.IntegerField(null=True)
 
+    class Meta:
+        unique_together = (("membership", "event"),)
+
     def __unicode__(self):
-        return  self.poolevent.pool.label + " / " + \
-                self.poolevent.event.label + " / " + \
+        return  self.membership.user.username + " / " + \
                 self.membership.pool.label + " / " + \
-                self.membership.user.username
+                self.event.label
 
 
 
@@ -151,6 +159,9 @@ class Match(models.Model):
     team2_score_penalties = models.IntegerField(null=True, blank=True)
     winner = models.IntegerField(null=True, blank=True)
 
+    class Meta:
+        unique_together = (("event", "team1", "team2"),)
+
     def __unicode__(self): 
         return self.begin.strftime('%d.%m.%Y') + "/" + "/" + self.event.label  +  "/" + self.team1.name + " : " + self.team2.name
 
@@ -177,10 +188,13 @@ class Bet(models.Model):
     winner = models.IntegerField(null=True, blank=True)
     rating = models.IntegerField(null=True, blank=True)
 
+    class Meta:
+        unique_together = (("account", "match"),)  
+
     def __unicode__(self):
-        return  self.account.poolevent.pool.label + " / " + \
-                self.account.poolevent.event.label + " / " + \
+        return  self.account.membership.user.username + " / " + \
+                self.account.membership.pool.label + " / " + \
+                self.account.event.label + " / " + \
                 self.match.team1.name + " - " + \
-                self.match.team2.name + " / " + \
-                self.account.membership.user.username
+                self.match.team2.name
 

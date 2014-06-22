@@ -4,15 +4,12 @@ from bet.models import Bet, Match
 
 
 class BetForm(forms.ModelForm):
-    name = forms.CharField(max_length=128, help_text="Please enter the category name.")
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-
-    # An inline class to provide additional information on the form.
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Bet
-
+        fields = ('account', 'match', \
+                    'team1_score_regular', 'team1_score_overtime', 'team1_score_penalties', \
+                    'team2_score_regular', 'team2_score_overtime', 'team2_score_penalties')
 
 
 class MatchForm(forms.ModelForm):
