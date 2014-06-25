@@ -13,9 +13,8 @@ Add a Bet
     {% csrf_token %}
 
     <input type="hidden" name="bet" value="{{bet.id}}" / >
-    <input type="hidden" name="pool" value="{{pool.id}}" />
-    <input type="hidden" name="match" value="{{match.id}}" />
     <input type="hidden" name="account" value="{{bet.account_id}}" / >
+    <input type="hidden" name="match" value="{{match.id}}" / >
 
     <!-- select name="match" id="{{ match.id }}" selected="{{ match.id }}">
         {% for match in matches %}
