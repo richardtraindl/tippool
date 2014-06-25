@@ -71,6 +71,19 @@ class Membership(models.Model):
     class Meta:
         unique_together = (("pool", "user"),)
 
+    def __init__(self, *args, **kwargs):
+        super(Membership, self).__init__(*args, **kwargs)
+        events = Event.objects.filter(poolevent__pool_id=self.pool_id, active=True)
+        print(len(events))
+        for event in events:
+            try:
+                account = Account.objects.get(event_id=event.id, membership_id=self.id)
+            except Account.DoesNotExist:
+                account = Account()
+                account.membership_id = self.id
+                account.event_id = event.id
+                account.save()
+
     def __unicode__(self):
         return self.pool.label + "/" + self.user.username 
 
@@ -100,6 +113,18 @@ class PoolEvent(models.Model):
 
     class Meta:
         unique_together = (("pool", "event"),)
+
+    def __init__(self, *args, **kwargs):
+        super(PoolEvent, self).__init__(*args, **kwargs)
+        memberships = Membership.objects.filter(pool_id=self.pool_id)
+        for membership in memberships:
+            try:
+                account = Account.objects.get(event_id=self.event_id, membership_id=membership.id)
+            except Account.DoesNotExist:
+                account = Account.objects.get()
+                account.membership_id = membership.id
+                account.event_id = self.event_id
+                account.save()
 
     def __unicode__(self):
         return self.pool.label + '-' + self.event.label

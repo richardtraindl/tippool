@@ -20,20 +20,20 @@ class MatchBets(object):
 
 
 
-def bets(request, req_pool=1, req_event=1):
+def bets(request, poolid=1, eventid=1):
     context = RequestContext(request)
 
     # pool
-    if req_pool == None:
+    if poolid == None:
         pool = Pool.objects.filter(membership__user__id=request.user.id, active=True)[:1].get()
     else:
-        pool = Pool.objects.get(id=req_pool)
+        pool = Pool.objects.get(id=poolid)
 
     # event
-    if req_event == None:
+    if eventid == None:
         event = Event.objects.get(poolevent__pool_id=pool.id, active=True)
     else:
-        event = Event.objects.get(id=req_event)
+        event = Event.objects.get(id=eventid)
 
     # all pools where user is member
     pools = Pool.objects.filter(membership__user__id=request.user.id, active=True)
@@ -68,25 +68,25 @@ def ranking(request):
 
 
 
-def games(request, req_event=1):
+def games(request, eventid=1):
     context = RequestContext(request)
     
-    if req_event == None:
+    if eventid == None:
         event = Event.objects.filter(parent_id=None, active=True)[:1].get()
     else:
-        event = Event.objects.get(id=req_event)
+        event = Event.objects.get(id=eventid)
 
     events = Event.objects.all().filter(active=True)
 
     matches = Match.objects.all().filter(event_id=event.id)
 
-    pool = Pool.objects.filter(membership__user__id=request.user.id, active=True)[1:].get()
+    pool = Pool.objects.filter(membership__user__id=request.user.id, active=True)[:1].get()
 
     return render_to_response('bet/games.html', {'body_id': 'games', 'event': event, 'events': events, 'matches': matches, 'pool': pool, 'user': request.user }, context )
 
 
 
-def add_bet(request, req_pool=1, req_match=1):
+def add_bet(request, poolid=1, matchid=1):
     # Get the context from the request.
     context = RequestContext(request)
 
@@ -111,17 +111,17 @@ def add_bet(request, req_pool=1, req_match=1):
         # If the request was not a POST, display the form to enter details.
         form = BetForm()
 
-        if req_match == None:
+        if matchid == None:
             match = Match.objects.filter(status=10, event__poolevent__membership__user__id=request.user.id)[:1].get()
         else:
-            match = Match.objects.get(id=req_match)
+            match = Match.objects.get(id=matchid)
 
         pools = Pool.objects.filter(membership__user__id=request.user.id, poolevent__event__match__id=match.id)
 
-        if req_pool == None:
+        if poolid == None:
             pool = pools[0]
         else:
-            pool = Pool.objects.get(id=req_pool)
+            pool = Pool.objects.get(id=poolid)
 
         try:
             membership = Membership.objects.get(pool_id=pool.id, user_id=request.user.id)
