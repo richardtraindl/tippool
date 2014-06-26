@@ -25,9 +25,9 @@ Tipps
 <div class="gap"></div>
 
 
-<h2>Tipps für Spiele aus {{ event.label }}</h2>
+<h2>{{ user.username }} Tipps für Spiele aus {{ event.label }}</h2>
 
-    {% for matchbet in match_bets %}
+    {% for matchbet in mymatch_bets %}
         <div id="{{ matchbet.match.id }}" class="div-table bettable">
             
             <div class="div-row huge-gap">&nbsp;</div>
@@ -74,10 +74,10 @@ Tipps
                     &nbsp;
                 </div>
                 <div class="div-cell bettable-r5">
-                    {% if matchbet.match.status == 30 and matchbet.match.team1_score_regular != None and matchbet.match.team2_score_regular != None %}
-                        {{ matchbet.match.team1_score_regular }}
+                    {% if mymatchbet.match.status == 30 and mymatchbet.match.team1_score_regular != None and mymatchbet.match.team2_score_regular != None %}
+                        {{ mymatchbet.match.team1_score_regular }}
                         <span> : </span>
-                        {{ matchbet.match.team2_score_regular }}
+                        {{ mymatchbet.match.team2_score_regular }}
                     {% else %}
                         <div>
                             <span> - : - </span>
@@ -85,11 +85,11 @@ Tipps
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r6">
-                    {% if  matchbet.match.has_overtime %}
-                        {% if  matchbet.match.status == 30 and matchbet.match.team1_score_overtime != None and matchbet.match.team2_score_overtime != None %}
-                            {{ matchbet.match.team1_score_overtime }}
+                    {% if  mymatchbet.match.has_overtime %}
+                        {% if  mymatchbet.match.status == 30 and mymatchbet.match.team1_score_overtime != None and mymatchbet.match.team2_score_overtime != None %}
+                            {{ mymatchbet.match.team1_score_overtime }}
                             <span> : </span>
-                            {{ matchbet.match.team2_score_overtime }}
+                            {{ mymatchbet.match.team2_score_overtime }}
                         {% else %}
                             <div>
                                 <span> - : - </span>
@@ -98,11 +98,11 @@ Tipps
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r7">
-                    {% if matchbet.match.has_penalties %}
-                        {% if  matchbet.match.status == 30 and matchbet.match.team1_score_penalties != None and matchbet.match.team2_score_penalties != None %}
-                            {{ matchbet.match.team1_score_penalties }}
+                    {% if mymatchbet.match.has_penalties %}
+                        {% if  mymatchbet.match.status == 30 and mymatchbet.match.team1_score_penalties != None and mymatchbet.match.team2_score_penalties != None %}
+                            {{ mymatchbet.match.team1_score_penalties }}
                             <span> : </span>
-                            {{ matchbet.match.team2_score_penalties }}
+                            {{ mymatchbet.match.team2_score_penalties }}
                         {% else %}
                             <div>
                                 <span> - : - </span>
@@ -115,10 +115,10 @@ Tipps
                 </div>
             </div>
         
-        {% for bet in matchbet.betlist %}
+        {% for mybet in matchbet.betlist %}
             <div class="div-row bets {% cycle 'even-row' 'odd-row' %}">
                 <div class="div-cell bettable-r1">
-                    {{ bet.account.membership.user.username }}
+                    {{ mybet.pool.label }}
                 </div>
                 <div class="div-cell right bettable-r2">
                     &nbsp;
@@ -130,25 +130,25 @@ Tipps
                     &nbsp;
                 </div>
                 <div class="div-cell bettable-r5">
-                    {{ bet.team1_score_regular }} - {{ bet.team2_score_regular }}
+                    {{ mybet.bet.team1_score_regular }} - {{ mybet.bet.team2_score_regular }}
                 </div>
                 <div class="div-cell bettable-r6">
                     {% if bet.overtime %}
-                        {{ bet.team1_score_overtime }} - {{ bet.team2_score_overtime }}
+                        {{ mybet.bet.team1_score_overtime }} - {{ mybet.bet.team2_score_overtime }}
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r7">
-                    {% if bet.penalties %}
-                        {{ bet.team1_score_penalties }} - {{ bet.team2_score_penalties }}
+                    {% if mybet.bet.penalties %}
+                        {{ mybet.bet.team1_score_penalties }} - {{ mybet.bet.team2_score_penalties }}
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r8">
-                    {% if bet.match.status == 10 %}
-                        {% if bet.account.membership.user_id == user.id %}
-                            <a href="/bet/add_bet/{{bet.id}}">tippen</a>
+                    {% if mybet.bet.match.status == 10 %}
+                        {% if mybet.bet.account.membership.user_id == user.id %}
+                            <a href="/bet/add_bet/{{mybet.bet.id}}">tippen</a>
                         {% endif %}
                     {% else %}
-                        {{ bet.rating }}                    
+                        {{ mybet.bet.rating }}                    
                     {% endif %}
                 </div>
             </div>

@@ -9,6 +9,17 @@ from bet.forms import BetForm
 
 
 
+class MyBet(object):
+    def __init__(self, bet=None, pool=None, user=None):
+        self.bet = bet
+        self.pool = pool
+        self.user = user
+
+class MyMatchBets(object):
+    def __init__(self, match=None):
+        self.match = match
+        self.betlist = []
+
 class MatchBets(object):
     def __init__(self, match=None):
         self.match = match
@@ -17,6 +28,7 @@ class MatchBets(object):
     def add_bet(self, bets):
         for bet in bets:
             self.betlist.append(bet)
+
 
 
 def mybets(request, eventid=1):
@@ -33,22 +45,27 @@ def mybets(request, eventid=1):
 
 
     # all events for choosen pool
-    events = Event.objects.filter(poolevent__pool__membership__user_id=request.user.id, active=True)
+    events = Event.objects.filter(poolevent__pool__membership__user_id=request.user.id, \
+                                    active=True).distinct()
 
     # all matches for choosen event
     matches = Match.objects.all().filter(event_id=event.id)
 
     # all bets for choosen pool and event
-    match_bets = []
+    mymatch_bets = []
     for match in matches:
-        match_bet = MatchBets(match)
+        mymatch_bet = MyMatchBets(match)
 
         for pool in pools:
             try:
                 membership = Membership.objects.get(pool_id=pool.id, user_id=request.user.id)
                 account= Account.objects.get(event_id=match.event_id, membership_id=membership.id)
                 bet = Bet.objects.get(match_id=match.id, account_id=account.id)
-                match_bet.betlist.append(bet)
+                mybet = MyBet()
+                mybet.bet = bet
+                mybet.pool = pool
+                mybet.user = request.user
+                mymatch_bet.betlist.append(mybet)
             except Bet.DoesNotExist:
                 bet = Bet()
                 bet.account_id = account.id
@@ -58,12 +75,16 @@ def mybets(request, eventid=1):
                 bet.team1_score_regular = 0
                 bet.team2_score_regular = 0
                 bet.save()
-                match_bet.betlist.append(bet)
+                mybet = MyBet()
+                mybet.bet = bet
+                mybet.pool = pool
+                mybet.user = request.user
+                mymatch_bet.betlist.append(mybet)
                 continue
 
-        match_bets.append(match_bet)
+        mymatch_bets.append(mymatch_bet)
 
-    return render(request, 'bet/mybets.html', {'body_id': 'mybets', 'events': events, 'event': event,  'match_bets': match_bets } )
+    return render(request, 'bet/mybets.html', {'body_id': 'mybets', 'events': events, 'event': event,  'mymatch_bets': mymatch_bets, 'user': request.user } )
 
 
 
@@ -201,10 +222,10 @@ def add_bet(request, betid=1):
     # A HTTP POST?
     if request.method == 'POST':
         bet_id = request.POST['bet']
-        match_id = request.POST['match']
+        # match_id = request.POST['match']
 
         bet = Bet.objects.get(id=bet_id)
-        match = Match.objects.get(id=match_id)
+        match = Match.objects.get(id=bet.match_id)
 
         form = BetForm(request.POST, instance=bet)
         if form.is_valid():

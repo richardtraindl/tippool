@@ -43,12 +43,18 @@
                             <a href="{% url 'bet.views.games' %}">SPIELE</a> |
                         {% endif %}
                         
-                        {% if body_id == 'bets' %}
-                            <span>TIPPS |</span>
+                        {% if body_id == 'mybets' %}
+                            <span>MEINE TIPPS |</span>
                         {% else %}
                             <a href="{% url 'bet.views.mybets' %}">MEINE TIPPS</a> | 
                         {% endif %}
-                        
+
+                        {% if body_id == 'bets' %}
+                            <span>ALLE TIPPS |</span>
+                        {% else %}
+                            <a href="{% url 'bet.views.bets' %}">ALLE TIPPS</a> | 
+                        {% endif %}
+                                                
                         {% if body_id == 'ranking' %}
                             <span>WERTUNG |</span>
                         {% else %}

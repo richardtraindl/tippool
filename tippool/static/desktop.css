@@ -220,15 +220,15 @@ img.left-spacer  {
 }
 
 .timetable .div-cell, .bettable .div-cell{
-    background-color: #F0F0F0;
+    background-color: lightblue; // #F0F0F0
 }
 
 .even-row .div-cell{
-    background-color: #F0FFF0;
+    background-color: #F0F0F0;
 }
 
 .odd-row .div-cell{
-    background-color: #DCDCDC;
+    background-color: #DCDCDC; // #F0FFF0
 }
 
 .timetable-r1{
