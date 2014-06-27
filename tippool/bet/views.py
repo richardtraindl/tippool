@@ -247,3 +247,27 @@ def add_bet(request, betid=1):
         match = Match.objects.get(id=bet.match_id)
 
         return render_to_response('bet/add_bet.html', {'form': form, 'body_id': 'add_bet', 'bet': bet, 'match': match }, context)
+
+
+
+def do_bet(request):
+    # Get the context from the request.
+    context = RequestContext(request)
+
+    # A HTTP POST?
+    if request.method == 'POST':
+        bet_id = request.POST['bet']
+
+        bet = Bet.objects.get(id=bet_id)
+        match = Match.objects.get(id=bet.match_id)
+
+        form = BetForm(request.POST, instance=bet)
+        if form.is_valid():
+            form.save(commit=True)
+            return HttpResponseRedirect("/bet/mybets/" + str(match.event_id))
+        else:
+            # The supplied form contained errors - just print them to the terminal.
+            print form.errors
+            return HttpResponse(form.errors)
+    else:
+        return HttpResponse("error")
