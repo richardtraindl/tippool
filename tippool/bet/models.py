@@ -74,7 +74,6 @@ class Membership(models.Model):
     def __init__(self, *args, **kwargs):
         super(Membership, self).__init__(*args, **kwargs)
         events = Event.objects.filter(poolevent__pool_id=self.pool_id, active=True)
-        print(len(events))
         for event in events:
             try:
                 account = Account.objects.get(event_id=event.id, membership_id=self.id)
