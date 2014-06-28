@@ -26,7 +26,7 @@ def mybets(request, eventid=1):
     context = RequestContext(request)
 
     # all pools where user is member
-    pools = Pool.objects.filter(membership__user__id=request.user.id, active=True)
+    pools = Pool.objects.filter(membership__user_id=request.user.id, active=True)
 
     # event
     if eventid == None:

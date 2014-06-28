@@ -94,7 +94,7 @@
     "model": "bet.team",
     "pk": 11,
     "fields": {
-      "name": "Elfenbeinküste",
+      "name": "Elfenbeink.",
       "logo": "",
       "active": "1"
     }
@@ -340,8 +340,7 @@
     "model": "bet.event",
     "pk": 1,
     "fields": {
-      "label": "WM 14",
-      "status": 10
+      "label": "WM 14"
     }
   },
   {
@@ -349,8 +348,7 @@
     "pk": 2,
     "fields": {
       "label": "Gruppe A",
-      "parent": 1,
-      "status": 10
+      "parent": 1
     }
   },
   {
@@ -358,8 +356,7 @@
     "pk": 3,
     "fields": {
       "label": "Gruppe B",
-      "parent": 1,
-      "status": 10
+      "parent": 1
     }
   },
   {
@@ -367,8 +364,7 @@
     "pk": 4,
     "fields": {
       "label": "Gruppe C",
-      "parent": 1,
-      "status": 10
+      "parent": 1
     }
   },
   {
@@ -376,8 +372,7 @@
     "pk": 5,
     "fields": {
       "label": "Gruppe D",
-      "parent": 1,
-      "status": 10
+      "parent": 1
     }
   },
   {
@@ -385,8 +380,7 @@
     "pk": 6,
     "fields": {
       "label": "Gruppe E",
-      "parent": 1,
-      "status": 10
+      "parent": 1
     }
   },
   {
@@ -394,8 +388,7 @@
     "pk": 7,
     "fields": {
       "label": "Gruppe F",
-      "parent": 1,
-      "status": 10
+      "parent": 1
     }
   },
   {
@@ -403,8 +396,7 @@
     "pk": 8,
     "fields": {
       "label": "Gruppe G",
-      "parent": 1,
-      "status": 10
+      "parent": 1
     }
   },
   {
@@ -412,8 +404,7 @@
     "pk": 9,
     "fields": {
       "label": "Gruppe H",
-      "parent": 1,
-      "status": 10
+      "parent": 1
     }
   },
   {

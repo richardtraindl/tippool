@@ -95,11 +95,10 @@ class EventManager(models.Manager):
 class Event(models.Model):
     objects = EventManager()
 
-    label = models.CharField(max_length=100, unique=True,  null=False)
-    status = models.IntegerField(null=False)
-    parent = models.ForeignKey('self', null=True)
-    active = models.BooleanField(default=True)
     pools = models.ManyToManyField(Pool, through='PoolEvent')
+    parent = models.ForeignKey('self', null=True)
+    label = models.CharField(max_length=100, unique=True,  null=False)
+    active = models.BooleanField(default=True)
 
     def __unicode__(self): 
         return self.label
