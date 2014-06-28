@@ -610,7 +610,7 @@
       "team2": ["Belgien"]
      }
   },
-   {
+  {
     "model": "bet.match",
     "pk": 48,
     "fields": {
@@ -621,19 +621,6 @@
       "has_penalties": "0",
       "team1": ["Algerien"],
       "team2": ["Russland"]
-    }
-  },
-  {
-    "model": "bet.bet",
-    "pk": 1,
-    "fields": {
-      "account": 14,
-      "match": 37,
-      "overtime": "0",
-      "penalties": "0",
-      "rating": 0,
-      "team1_score_regular": 0,
-      "team2_score_regular": 0
     }
   }
 ]

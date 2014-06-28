@@ -46,8 +46,9 @@ Tipps
             
             <div class="div-row">
                 <div class="div-cell bettable-r1">
-                    <span class="toggle-bets">+</span>
-                    {{ matchbet.match.begin | date:"d.m.Y,H:i" }}
+                    <span class="toggle-bets">
+                        {{ matchbet.match.begin | date:"d.m.Y,H:i" }}
+                    </span>
                 </div>
                 <div class="div-cell right bettable-r2">
                     {{ matchbet.match.team1.name }}

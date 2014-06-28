@@ -50,12 +50,25 @@ def mybets(request, eventid=1):
         for pool in pools:
             try:
                 membership = Membership.objects.get(pool_id=pool.id, user_id=request.user.id)
+            except Membership.DoesNotExist:
+                continue
+            
+            try:
                 account= Account.objects.get(event_id=match.event_id, membership_id=membership.id)
+            except Account.DoesNotExist:
+                continue
+
+            try:
                 bet = Bet.objects.get(match_id=match.id, account_id=account.id)
-                pooluserbet = PoolUserBet(pool, request.user, bet)
+                pooluserbet = PoolUserBet()
+                pooluserbet.pool = pool
+                pooluserbet.user = request.user
+                pooluserbet.bet = bet
                 matchbet.betlist.append(pooluserbet)
             except Bet.DoesNotExist:
-                bet = Bet(account.id, match.id, False, False, 0, 0)
+                bet = Bet()
+                bet.account_id = account.id
+                bet.match_id = match.id
                 bet.save()
                 pooluserbet = PoolUserBet(pool, request.user, bet)
                 matchbet.betlist.append(pooluserbet)
@@ -99,7 +112,10 @@ def bets(request, poolid=1, eventid=1):
         try:
             bets = Bet.objects.filter(match_id=match.id, account__membership__pool_id=pool.id)
             for bet in bets:
-                pooluserbet = PoolUserBet(pool, request.user, bet)
+                pooluserbet = PoolUserBet()
+                pooluserbet.pool = pool
+                pooluserbet.user = request.user
+                pooluserbet.bet = bet
                 matchbet.betlist.append(pooluserbet)
         except Bet.DoesNotExist:
             continue
