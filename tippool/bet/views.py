@@ -43,9 +43,9 @@ def mybets(request, eventid=1):
     matches = Match.objects.all().filter(event_id=event.id)
 
     # all bets for choosen pool and event
-    match_bets = []
+    matchbets = []
     for match in matches:
-        match_bet = MatchBet(match)
+        matchbet = MatchBet(match)
 
         for pool in pools:
             try:
@@ -53,29 +53,17 @@ def mybets(request, eventid=1):
                 account= Account.objects.get(event_id=match.event_id, membership_id=membership.id)
                 bet = Bet.objects.get(match_id=match.id, account_id=account.id)
                 pooluserbet = PoolUserBet(pool, request.user, bet)
-                #pooluserbet.pool = pool
-                #pooluserbet.user = request.user
-                #pooluserbet.bet = bet
-                match_bet.betlist.append(pooluserbet)
+                matchbet.betlist.append(pooluserbet)
             except Bet.DoesNotExist:
                 bet = Bet(account.id, match.id, False, False, 0, 0)
-                #bet.account_id = account.id
-                #bet.match_id = match.id
-                #bet.overtime = False
-                #bet.penalties = False
-                #bet.team1_score_regular = 0
-                #bet.team2_score_regular = 0
                 bet.save()
                 pooluserbet = PoolUserBet(pool, request.user, bet)
-                #pooluserbet.pool = pool
-                #pooluserbet.user = request.user
-                #pooluserbet.bet = bet
-                match_bet.betlist.append(pooluserbet)
+                matchbet.betlist.append(pooluserbet)
                 continue
 
-        match_bets.append(match_bet)
+        matchbets.append(matchbet)
 
-    return render(request, 'bet/mybets.html', {'body_id': 'mybets', 'events': events, 'event': event,  'match_bets': match_bets, 'user': request.user } )
+    return render(request, 'bet/mybets.html', {'body_id': 'mybets', 'events': events, 'event': event,  'matchbets': matchbets, 'user': request.user } )
 
 
 
@@ -118,7 +106,7 @@ def bets(request, poolid=1, eventid=1):
 
         matchbets.append(matchbet)
 
-    return render(request, 'bet/bets.html', {'body_id': 'bets', 'pool': pool, 'pools': pools, 'event': event, 'events': events, 'matchbets': matchbets, 'user': request.user } )
+    return render(request, 'bet/bets.html', {'body_id': 'bets', 'pools': pools, 'pool': pool, 'events': events, 'event': event, 'matchbets': matchbets, 'user': request.user } )
 
 
 
