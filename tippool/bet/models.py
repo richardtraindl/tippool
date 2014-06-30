@@ -1,7 +1,8 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User, Group
-
+from django.core.urlresolvers import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db.models.signals import post_save
 
 
 #class User(models.Model):
@@ -26,17 +27,17 @@ status_cancelled = Status(40, "cancelled")
 
 
 
-class Winner(object):
-    def __init__(self, key=None, value=None):
-        self.key = key
-        self.value = value
+#class Winner(object):
+#    def __init__(self, key=None, value=None):
+#        self.key = key
+#        self.value = value
 
-    def __unicode__(self): 
-        return self.value
+#    def __unicode__(self): 
+#        return self.value
 
-winner_none  = Winner(0, "none")
-winner_team1 = Winner(1, "team1")
-winner_team2   = Winner(2, "team2")
+#winner_none  = Winner(0, "none")
+#winner_team1 = Winner(1, "team1")
+#winner_team2   = Winner(2, "team2")
 
 
 
@@ -71,20 +72,26 @@ class Membership(models.Model):
     class Meta:
         unique_together = (("pool", "user"),)
 
-    def __init__(self, *args, **kwargs):
-        super(Membership, self).__init__(*args, **kwargs)
-        events = Event.objects.filter(poolevent__pool_id=self.pool_id, active=True)
+    def __unicode__(self):
+        return self.pool.label + "/" + self.user.username 
+
+    @staticmethod
+    def create_accounts(sender, instance, **kwargs):
+        try:
+            events = Event.objects.filter(poolevent__pool_id=instance.pool_id, active=True)
+        except Event.DoesNotExist:
+            return
+
         for event in events:
             try:
-                account = Account.objects.get(event_id=event.id, membership_id=self.id)
+                account = Account.objects.get(membership_id=instance.id, event_id=event.id)
             except Account.DoesNotExist:
-                account = Account()
-                account.membership_id = self.id
+                account = Account(instance.id, event.id, None)
+                account.membership_id = instance.id
                 account.event_id = event.id
                 account.save()
 
-    def __unicode__(self):
-        return self.pool.label + "/" + self.user.username 
+post_save.connect(Membership.create_accounts, sender=Membership)
 
 
 
@@ -112,20 +119,22 @@ class PoolEvent(models.Model):
     class Meta:
         unique_together = (("pool", "event"),)
 
-    def __init__(self, *args, **kwargs):
-        super(PoolEvent, self).__init__(*args, **kwargs)
-        memberships = Membership.objects.filter(pool_id=self.pool_id)
+    @staticmethod
+    def create_accounts(sender, instance, **kwargs):
+        memberships = Membership.objects.filter(pool_id=instance.pool_id)
         for membership in memberships:
             try:
-                account = Account.objects.get(event_id=self.event_id, membership_id=membership.id)
+                account = Account.objects.get(event_id=instance.event_id, membership_id=membership.id)
             except Account.DoesNotExist:
-                account = Account.objects.get()
+                account = Account()
                 account.membership_id = membership.id
-                account.event_id = self.event_id
+                account.event_id = instance.event_id
                 account.save()
 
     def __unicode__(self):
         return self.pool.label + '-' + self.event.label
+
+post_save.connect(PoolEvent.create_accounts, sender=PoolEvent)
 
 
 
@@ -136,8 +145,8 @@ class AccountManager(models.Manager):
 class Account(models.Model):
     objects = AccountManager()
 
-    membership = models.ForeignKey(Membership)
     event = models.ForeignKey(Event)
+    membership = models.ForeignKey(Membership)
     rating = models.IntegerField(null=True)
 
     class Meta:
@@ -173,14 +182,14 @@ class Match(models.Model):
     has_overtime = models.BooleanField(null=False, default=False)
     has_penalties = models.BooleanField(null=False, default=False)
     team1 = models.ForeignKey(Team, related_name='match_team1')
-    team1_score_regular = models.IntegerField(null=True, blank=True)
-    team1_score_overtime = models.IntegerField(null=True, blank=True)
-    team1_score_penalties = models.IntegerField(null=True, blank=True)
+    team1_score_regular = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    team1_score_overtime = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    team1_score_penalties = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
     team2 = models.ForeignKey(Team, related_name='match_team2')
-    team2_score_regular = models.IntegerField(null=True, blank=True)
-    team2_score_overtime = models.IntegerField(null=True, blank=True)
-    team2_score_penalties = models.IntegerField(null=True, blank=True)
-    winner = models.IntegerField(null=True, blank=True)
+    team2_score_regular = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    team2_score_overtime = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    team2_score_penalties = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    # winner = models.IntegerField(null=True, blank=True)
 
     class Meta:
         unique_together = (("event", "team1", "team2"),)
@@ -188,6 +197,13 @@ class Match(models.Model):
     def __unicode__(self): 
         return self.begin.strftime('%d.%m.%Y') + "/" + "/" + self.event.label  +  "/" + self.team1.name + " : " + self.team2.name
 
+    def calc_one_two_draw(self):
+        if self.team1_score_regular > self.team2_score_regular:
+            return 1
+        elif self.team1_score_regular < self.team2_score_regular:
+            return 2
+        else:
+            return 0
 
 
 
@@ -198,17 +214,17 @@ class BetManager(models.Manager):
 class Bet(models.Model):
     objects = BetManager()
 
-    account= models.ForeignKey(Account)
     match= models.ForeignKey(Match)
+    account= models.ForeignKey(Account)
     overtime= models.BooleanField(null=False, default=False)
     penalties = models.BooleanField(null=False, default=False)
-    team1_score_regular = models.IntegerField(null=True, blank=False)
-    team1_score_overtime = models.IntegerField(null=True, blank=True)
-    team1_score_penalties = models.IntegerField(null=True, blank=True)
-    team2_score_regular = models.IntegerField(null=True, blank=False)
-    team2_score_overtime = models.IntegerField(null=True, blank=True)
-    team2_score_penalties = models.IntegerField(null=True, blank=True)
-    winner = models.IntegerField(null=True, blank=True)
+    team1_score_regular = models.IntegerField(null=True, blank=False, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    team1_score_overtime = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    team1_score_penalties = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    team2_score_regular = models.IntegerField(null=True, blank=False, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    team2_score_overtime = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    team2_score_penalties = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
+    # winner = models.IntegerField(null=True, blank=True)
     rating = models.IntegerField(null=True, blank=True)
 
     class Meta:
@@ -221,3 +237,10 @@ class Bet(models.Model):
                 self.match.team1.name + " - " + \
                 self.match.team2.name
 
+    def calc_one_two_draw(self):
+        if self.team1_score_regular > self.team2_score_regular:
+            return 1
+        elif self.team1_score_regular < self.team2_score_regular:
+            return 2
+        else:
+            return 0

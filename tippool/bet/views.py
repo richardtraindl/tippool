@@ -1,8 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from itertools import chain
 from django.shortcuts import get_object_or_404
+import datetime
+from dateutil.tz import tzlocal
 from bet.models import Event, EventManager, Match, Team, Membership, Pool, PoolEvent, Account, Bet
 from bet.forms import BetForm
 
@@ -56,7 +60,7 @@ def mybets(request, eventid=1):
             try:
                 account= Account.objects.get(event_id=match.event_id, membership_id=membership.id)
             except Account.DoesNotExist:
-                continue
+                account= Account(match.event_id, membership.id)
 
             try:
                 bet = Bet.objects.get(match_id=match.id, account_id=account.id)
@@ -67,12 +71,11 @@ def mybets(request, eventid=1):
                 matchbet.betlist.append(pooluserbet)
             except Bet.DoesNotExist:
                 bet = Bet()
-                bet.account_id = account.id
                 bet.match_id = match.id
+                bet.account_id = account.id
                 bet.save()
                 pooluserbet = PoolUserBet(pool, request.user, bet)
                 matchbet.betlist.append(pooluserbet)
-                continue
 
         matchbets.append(matchbet)
 
@@ -143,9 +146,7 @@ def games(request, eventid=1):
 
     matches = Match.objects.all().filter(event_id=event.id)
 
-    pool = Pool.objects.filter(membership__user__id=request.user.id, active=True)[:1].get()
-
-    return render_to_response('bet/games.html', {'body_id': 'games', 'event': event, 'events': events, 'matches': matches, 'pool': pool, 'user': request.user }, context )
+    return render_to_response('bet/games.html', {'body_id': 'games', 'event': event, 'events': events, 'matches': matches, 'user': request.user }, context )
 
 
 
@@ -157,10 +158,16 @@ def do_bet(request):
     if request.method == 'POST':
         bet_id = request.POST['bet']
         url = request.POST['url']
-        print(url)
 
         bet = Bet.objects.get(id=bet_id)
         match = Match.objects.get(id=bet.match_id)
+
+        if match.begin < datetime.datetime.now(tzlocal()):
+            if match.status == 10:
+                match.status = 20
+                match.save()
+
+            return HttpResponseRedirect(url)
 
         form = BetForm(request.POST, instance=bet)
         if form.is_valid():
