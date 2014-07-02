@@ -3,6 +3,9 @@ from django.contrib.auth.models import User, Group
 from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.signals import post_save
+import datetime
+from dateutil.tz import tzlocal
+
 
 
 #class User(models.Model):
@@ -197,8 +200,10 @@ class Match(models.Model):
     def __unicode__(self): 
         return self.begin.strftime('%d.%m.%Y') + "/" + "/" + self.event.label  +  "/" + self.team1.name + " : " + self.team2.name
 
-    def calc_one_two_draw(self):
-        if self.team1_score_regular > self.team2_score_regular:
+    def get_one_two_draw(self):
+        if self.status != 30 or self.team1_score_regular == None or self.team2_score_regular == None:
+            return None
+        elif self.team1_score_regular > self.team2_score_regular:
             return 1
         elif self.team1_score_regular < self.team2_score_regular:
             return 2
@@ -230,6 +235,7 @@ class Bet(models.Model):
     class Meta:
         unique_together = (("account", "match"),)  
 
+
     def __unicode__(self):
         return  self.account.membership.user.username + " / " + \
                 self.account.membership.pool.label + " / " + \
@@ -237,10 +243,71 @@ class Bet(models.Model):
                 self.match.team1.name + " - " + \
                 self.match.team2.name
 
-    def calc_one_two_draw(self):
+
+    def get_one_two_draw(self):
+        if self.team1_score_regular == None or self.team2_score_regular == None:
+            return None
         if self.team1_score_regular > self.team2_score_regular:
             return 1
         elif self.team1_score_regular < self.team2_score_regular:
             return 2
         else:
             return 0
+
+
+    def accept(self):
+        match = Match.objects.get(id=self.match_id)
+
+        return match.status == 10 and datetime.datetime.now(tzlocal()) < match.begin
+
+
+    def rate(self):
+        score = 0
+        b_one_two_draw = self.get_one_two_draw()
+        
+        match = Match.objects.get(id=self.match_id)
+        
+        m_one_two_draw = match.get_one_two_draw()
+
+        if b_one_two_draw == None or m_one_two_draw == None:
+            self.rating = score
+            return None
+
+        account = Account.objects.get(id=self.account_id)
+        membership = Membership.objects.get(id=account.membership_id)
+        pool = Pool.objects.get(id=membership.pool_id)
+        poolevent = PoolEvent.objects.get(pool_id=pool.id, event_id=match.event_id)
+        scorerule = ScoreRule.objects.get(id=poolevent.scorerule_id)
+        
+        if b_one_two_draw == m_one_two_draw:
+            score += scorerule.one_two_draw
+
+            if self.result_equal("regular"):
+                score += scorerule.regular
+            if match.has_overtime:
+                if self.result_equal("overtime"):
+                    score += scorerule.overtime
+            if match.has_penalties:
+                if self.result_equal("penalties"):
+                    score += scorerule.penalties
+
+        self.rating = score
+        self.save()
+        return score
+
+
+    def result_equal(self, _switch):
+        match = Match.objects.get(id=self.match_id)
+
+        if _switch == "regular":
+            return self.team1_score_regular == match.team1_score_regular and \
+                    self.team2_score_regular == match.team2_score_regular
+        elif _switch == "overtime":
+            return self.team1_score_overtime == match.team1_score_overtime and \
+                    self.team2_score_overtime == match.team2_score_overtime
+        elif _switch == "penalties":
+            return self.team1_score_penalties == match.team1_score_penalties and \
+                    self.team2_score_penalties == match.team2_score_penalties
+        else:
+            return False
+

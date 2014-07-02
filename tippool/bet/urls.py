@@ -12,4 +12,5 @@ urlpatterns = patterns('bet.views',
     url(r'^bets/(?P<poolid>\w+)/$', 'bets'),
     url(r'^bets/(?P<poolid>\w+)/(?P<eventid>\w+)/$', 'bets'),
     url(r'^ranking/$', 'ranking'),
+    url(r'^admin/$', 'admin'),
 )

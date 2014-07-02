@@ -252,11 +252,11 @@ img.left-spacer  {
 }
 
 .bettable-r1{
-    width: 28%;
+    width: 24%;
 }
 
 .bettable-r2{
-    width: 17%;
+    width: 19%;
 }
 
 .bettable-r3{
@@ -264,7 +264,7 @@ img.left-spacer  {
 }
 
 .bettable-r4{
-    width: 17%;
+    width: 19%;
 }
 
 .bettable-r5{
@@ -284,3 +284,10 @@ img.left-spacer  {
 }
 
 
+.score-team{
+    width: 44%;
+}
+
+.score-hyphen{
+    width: 2%;
+}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Admin
+
+{% endblock %}
+
+
+{% block content %}
+
+<h2>Spiele</h2>
+
+<div class="div-table timetable">
+    {% for match in matches %}
+        <div class="gap"></div>
+        
+        <div class="div-row">
+            <div class="div-cell timetable-r1">
+                {{ match.begin | date:"d.m.Y, H:i" }}
+            </div>
+            <div class="div-cell right timetable-r2">
+                {{ match.team1.name }}
+            </div>
+            <div class="div-cell center timetable-r3">
+                <span> : </span>
+            </div>
+            <div class="div-cell timetable-r4">
+                {{ match.team2.name }}
+            </div>
+            <div class="div-cell timetable-r5">
+                {% if match.status == 10 and pool.membership.user_id == user.id %}
+                    <a href="/bet/add_bet/{{match.id}}/{{pool.id}}">tippen</a>
+                {% else %}
+                    tippen
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

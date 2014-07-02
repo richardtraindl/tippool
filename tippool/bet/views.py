@@ -160,9 +160,9 @@ def do_bet(request):
         url = request.POST['url']
 
         bet = Bet.objects.get(id=bet_id)
-        match = Match.objects.get(id=bet.match_id)
 
-        if match.begin < datetime.datetime.now(tzlocal()):
+        if bet.accept() == False:
+            match = Match.objects.get(id=bet.match_id)
             if match.status == 10:
                 match.status = 20
                 match.save()
@@ -180,3 +180,17 @@ def do_bet(request):
             return HttpResponse(form.errors)
     else:
         return HttpResponse("error")
+
+
+
+def admin(request):
+    # Get the context from the request.
+    context = RequestContext(request)
+
+    matches = Match.objects.filter(status=30)
+    for match in matches:
+        bets = Bet.objects.filter(match_id = match.id)
+        for bet in bets:
+            bet.rate()
+
+    return render_to_response('bet/admin.html', {'body_id': 'admin', 'matches': matches}, context )
