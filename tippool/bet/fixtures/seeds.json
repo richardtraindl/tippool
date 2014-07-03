@@ -321,11 +321,34 @@
     }
   },
   {
+    "model": "bet.scorerule",
+    "pk": 1,
+    "fields": {
+      "label": "Regel 1",
+      "one_two_draw": 1,
+      "regular": 2,
+      "overtime": 3,
+      "penalties": 5
+    }
+  },
+  {
+    "model": "bet.scorerule",
+    "pk": 2,
+    "fields": {
+      "label": "Regel 2",
+      "one_two_draw": 1,
+      "regular": 1,
+      "overtime": 2,
+      "penalties": 3
+    }
+  },
+  {
     "model": "bet.pool",
     "pk": 1,
     "fields": {
       "label": "Tippool 1",
-      "active": "1"
+      "active": "1",
+      "scorerule": 1
     }
   },
   {
@@ -333,7 +356,8 @@
     "pk": 2,
     "fields": {
       "label": "Tippool 2",
-      "active": "1"
+      "active": "1",
+      "scorerule": 2
     }
   },
   {
@@ -405,28 +429,6 @@
     "fields": {
       "label": "Gruppe H",
       "parent": 1
-    }
-  },
-  {
-    "model": "bet.scorerule",
-    "pk": 1,
-    "fields": {
-      "label": "Regel 1",
-      "one_two_draw": 1,
-      "regular": 2,
-      "overtime": 3,
-      "penalties": 5
-    }
-  },
-  {
-    "model": "bet.scorerule",
-    "pk": 2,
-    "fields": {
-      "label": "Regel 2",
-      "one_two_draw": 1,
-      "regular": 1,
-      "overtime": 2,
-      "penalties": 3
     }
   }
 ]

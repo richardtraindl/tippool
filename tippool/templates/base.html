@@ -10,20 +10,20 @@
                 {% block title %}{% endblock %}
             </title>
 
-            <script>
-                $(document).ready(function(){
-                  $(".toggle-bets").click(function(){
-                    $(this).parents(".bettable").find(".bets").toggle(1000);
-                  });
-                });
-            </script>
+            <!-- script>
+                //$(document).ready(function(){
+                //  $(".toggle-bets").click(function(){
+                //    $(this).parents(".bettable").find(".bets").toggle(1000);
+                //  });
+                //});
+            </script -->
         </head>
-        <body>
+        <body id="{{body_id}}">
             <header>
                 <div class="div-table">
                     <div class="div-row">
                         <div class="div-cell right_line" style="width: 50%">
-                            <h1><a href="{% url 'bet.views.games' %}">tippMit</a></h1>
+                            <h1><a href="{% url 'bet.views.mybets' %}">tippMit</a></h1>
                         </div>
                         <div class="div-cell" style="text-align: right; vertical-align: middle">
                             {% block toggle_login %}
@@ -37,12 +37,6 @@
             <div class="content">
                 <nav>
                     <h2 style="text-align: left; vertical-align: middle">
-                        {% if body_id == 'games' %}
-                            <span>SPIELE |</span>
-                        {% else %}
-                            <a href="{% url 'bet.views.games' %}">SPIELE</a> |
-                        {% endif %}
-                        
                         {% if body_id == 'mybets' %}
                             <span>MEINE TIPPS |</span>
                         {% else %}
@@ -64,7 +58,7 @@
                         {% if body_id == 'admin' %}
                             <span style="color: white">ADMIN</span>
                         {% else %}
-                            <span style="color: white">ADMIN</span>
+                            <a href="{% url 'bet.views.admin' %}">ADMIN</a> |
                         {% endif %}
                     </h2>
                 </nav>

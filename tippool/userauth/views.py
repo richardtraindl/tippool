@@ -29,7 +29,7 @@ def user_login(request):
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 login(request, user)
-                return HttpResponseRedirect('/bet/games/')
+                return HttpResponseRedirect('/bet/mybets/')
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your Betpool account is disabled.")
@@ -69,7 +69,7 @@ def user_password_change(request):
             if user.is_active:
                 user.set_password(new_password)
                 user.save()
-                return HttpResponseRedirect('/bet/games')
+                return HttpResponseRedirect('/bet/mybets')
             else:
                 return HttpResponse("Your Tiptool account is disabled.")
         else:

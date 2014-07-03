@@ -60,6 +60,7 @@ class Pool(models.Model):
     label = models.CharField(max_length=100, unique=True)
     active = models.BooleanField(default=True)
     users = models.ManyToManyField(User, through='Membership')
+    scorerule = models.ForeignKey(ScoreRule)
 
     def __unicode__(self):
         return self.label
@@ -117,7 +118,6 @@ class Event(models.Model):
 class PoolEvent(models.Model):
     pool = models.ForeignKey(Pool)
     event = models.ForeignKey(Event)
-    scorerule = models.ForeignKey(ScoreRule)
 
     class Meta:
         unique_together = (("pool", "event"),)
@@ -192,7 +192,6 @@ class Match(models.Model):
     team2_score_regular = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
     team2_score_overtime = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
     team2_score_penalties = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
-    # winner = models.IntegerField(null=True, blank=True)
 
     class Meta:
         unique_together = (("event", "team1", "team2"),)
@@ -229,7 +228,6 @@ class Bet(models.Model):
     team2_score_regular = models.IntegerField(null=True, blank=False, validators=[MinValueValidator(0), MaxValueValidator(99)])
     team2_score_overtime = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
     team2_score_penalties = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(99)])
-    # winner = models.IntegerField(null=True, blank=True)
     rating = models.IntegerField(null=True, blank=True)
 
     class Meta:
@@ -276,9 +274,8 @@ class Bet(models.Model):
         account = Account.objects.get(id=self.account_id)
         membership = Membership.objects.get(id=account.membership_id)
         pool = Pool.objects.get(id=membership.pool_id)
-        poolevent = PoolEvent.objects.get(pool_id=pool.id, event_id=match.event_id)
-        scorerule = ScoreRule.objects.get(id=poolevent.scorerule_id)
-        
+        scorerule = ScoreRule.objects.get(id=pool.scorerule_id)
+
         if b_one_two_draw == m_one_two_draw:
             score += scorerule.one_two_draw
 

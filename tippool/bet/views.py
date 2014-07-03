@@ -134,22 +134,6 @@ def ranking(request):
 
 
 
-def games(request, eventid=1):
-    context = RequestContext(request)
-    
-    if eventid == None:
-        event = Event.objects.filter(parent_id=None, active=True)[:1].get()
-    else:
-        event = Event.objects.get(id=eventid)
-
-    events = Event.objects.all().filter(active=True)
-
-    matches = Match.objects.all().filter(event_id=event.id)
-
-    return render_to_response('bet/games.html', {'body_id': 'games', 'event': event, 'events': events, 'matches': matches, 'user': request.user }, context )
-
-
-
 def do_bet(request):
     # Get the context from the request.
     context = RequestContext(request)
