@@ -22,7 +22,7 @@
                 <div class="div-cell bettable-r5">
                   <form id="do_bet" method="post" action="/bet/do_bet/">
                     {% csrf_token %}
-                    {% if bitem.bet.match.status == 10 and bitem.bet.account.membership.user_id == user.id %}
+                    {% if bitem.bet.match.status.id == 10 and bitem.bet.account.membership.user_id == user.id %}
                         <input type="hidden" name="bet" value="{{bitem.bet.id}}" />
                         {% if body_id == 'mybets' %}
                             <input type="hidden" name="url" value="/bet/mybets/{{event.id}}" />
@@ -51,7 +51,7 @@
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r6">
-                    {% if bitem.bet.match.status == 10 and bitem.bet.overtime %}
+                    {% if bitem.bet.match.status.id == 10 and bitem.bet.overtime %}
                         {% if bitem.bet.account.membership.user_id == user.id %}
                             <div class="div-cell score-team">
                                 <input type="text" name="team1_score_overtime" value="{{ bitem.bet.team1_score_overtime | default_if_none:"" }}" size="1" />
@@ -76,7 +76,7 @@
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r7">
-                    {% if bitem.bet.match.status == 10 and bitem.bet.penalties %}
+                    {% if bitem.bet.match.status.id == 10 and bitem.bet.penalties %}
                         {% if bitem.bet.account.membership.user_id == user.id %}
                             <div class="div-cell score-team">
                                 <input type="text" name="team1_score_penalties" value="{{ bitem.bet.team1_score_penalties | default_if_none:"" }}" size="1" />
@@ -101,9 +101,9 @@
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r8">
-                    {% if bitem.bet.match.status == 10 and bitem.bet.account.membership.user_id == user.id %}
+                    {% if bitem.bet.match.status.id == 10 and bitem.bet.account.membership.user_id == user.id %}
                         <input type="submit" value="tipp" />
-                    {% elif bitem.bet.match.status == 30 %}
+                    {% elif bitem.bet.match.status.id == 30 %}
                         {{ bitem.bet.rating | default_if_none:"" }}
                     {% endif %}
                     </form>

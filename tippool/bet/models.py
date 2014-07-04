@@ -8,39 +8,12 @@ from dateutil.tz import tzlocal
 
 
 
-#class User(models.Model):
-#    username = models.CharField(max_length=30, unique=True)
-#    password = models.CharField(max_length=30)
-#    admin = models.BooleanField(default=False)
-
-
-
-class Status(object):
-    def __init__(self, key=None, value=None):
-        self.key = key
-        self.value = value
+class Status(models.Model):
+    key = models.IntegerField(null=False, unique=True)
+    value = models.CharField(max_length=20, unique=True)
 
     def __unicode__(self): 
         return self.value
-
-status_scheduled = Status(10, "scheduled")
-status_running   = Status(20, "running")
-status_finished  = Status(30, "finished")
-status_cancelled = Status(40, "cancelled")
-
-
-
-#class Winner(object):
-#    def __init__(self, key=None, value=None):
-#        self.key = key
-#        self.value = value
-
-#    def __unicode__(self): 
-#        return self.value
-
-#winner_none  = Winner(0, "none")
-#winner_team1 = Winner(1, "team1")
-#winner_team2   = Winner(2, "team2")
 
 
 
@@ -107,7 +80,8 @@ class Event(models.Model):
     objects = EventManager()
 
     pools = models.ManyToManyField(Pool, through='PoolEvent')
-    parent = models.ForeignKey('self', null=True)
+    is_super = models.BooleanField(null=False, default=False)
+    parent = models.ForeignKey('self', null=True, blank=True)
     label = models.CharField(max_length=100, unique=True,  null=False)
     active = models.BooleanField(default=True)
 
@@ -181,7 +155,7 @@ class Team(models.Model):
 class Match(models.Model):
     event = models.ForeignKey(Event)
     begin = models.DateTimeField()
-    status = models.IntegerField(null=False)
+    status = models.ForeignKey(Status)
     has_overtime = models.BooleanField(null=False, default=False)
     has_penalties = models.BooleanField(null=False, default=False)
     team1 = models.ForeignKey(Team, related_name='match_team1')
@@ -200,7 +174,7 @@ class Match(models.Model):
         return self.begin.strftime('%d.%m.%Y') + "/" + "/" + self.event.label  +  "/" + self.team1.name + " : " + self.team2.name
 
     def get_one_two_draw(self):
-        if self.status != 30 or self.team1_score_regular == None or self.team2_score_regular == None:
+        if self.status_id != 30 or self.team1_score_regular == None or self.team2_score_regular == None:
             return None
         elif self.team1_score_regular > self.team2_score_regular:
             return 1
@@ -256,7 +230,7 @@ class Bet(models.Model):
     def accept(self):
         match = Match.objects.get(id=self.match_id)
 
-        return match.status == 10 and datetime.datetime.now(tzlocal()) < match.begin
+        return match.status_id == 10 and datetime.datetime.now(tzlocal()) < match.begin
 
 
     def rate(self):

@@ -147,8 +147,8 @@ def do_bet(request):
 
         if bet.accept() == False:
             match = Match.objects.get(id=bet.match_id)
-            if match.status == 10:
-                match.status = 20
+            if match.status_id == 10:
+                match.status_id = 20
                 match.save()
 
             return HttpResponseRedirect(url)
@@ -171,7 +171,7 @@ def admin(request):
     # Get the context from the request.
     context = RequestContext(request)
 
-    matches = Match.objects.filter(status=30)
+    matches = Match.objects.filter(id=30)
     for match in matches:
         bets = Bet.objects.filter(match_id = match.id)
         for bet in bets:

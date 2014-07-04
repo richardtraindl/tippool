@@ -1,0 +1,34 @@
+[
+  {
+    "model": "bet.status",
+    "pk": 10,
+    "fields": {
+      "key": 10,
+      "value": "scheduled"
+    }
+  },
+  {
+    "model": "bet.status",
+    "pk": 20,
+    "fields": {
+      "key": 20,
+      "value": "running"
+    }
+  },
+  {
+    "model": "bet.status",
+    "pk": 30,
+    "fields": {
+      "key": 30,
+      "value": "finished"
+    }
+  },
+  {
+    "model": "bet.status",
+    "pk": 40,
+    "fields": {
+      "key": 40,
+      "value": "cancelled"
+    }
+  }
+]
