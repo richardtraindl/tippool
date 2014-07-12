@@ -1,52 +1,49 @@
 
 
-        <div id="{{ matchbet.match.id }}" class="div-table bettable">
-            
-            <div class="div-row huge-gap">&nbsp;</div>
-            
-            <div class="div-row">
-                <div class="div-cell bettable-r1">
+        <table id="{{ matchbet.match.id }}" class="matchtable">
+            <tr>
+                <td class="bettable-r1">
                     <span class="toggle-bets">
                         {{ matchbet.match.begin | date:"d.m.Y,H:i" }}
                     </span>
-                </div>
-                <div class="div-cell right bettable-r2">
+                </td>
+                <td class="bettable-r2">
                     {{ matchbet.match.team1.name }}
-                </div>
-                <div class="div-cell center bettable-r3">
+                </td>
+                <td class="bettable-r3">
                     -
-                </div>
-                <div class="div-cell bettable-r4">
+                </td>
+                <td class="bettable-r4">
                     {{ matchbet.match.team2.name }}
-                </div>
-                <div class="div-cell bettable-r5">
-                    <span> n. 90' </span>
-                </div>
-                <div class="div-cell bettable-r6">
-                    <span> n. Verl. </span>
-                </div>
-                <div class="div-cell bettable-r7">
-                    <span> Elfer </span>
-                </div>
-                <div class="div-cell bettable-r8">
+                </td>
+                <td class="bettable-r5">
+                    n. 90'
+                </td>
+                <td class="bettable-r6">
+                    n. Verl.
+                </td>
+                <td class="bettable-r7">
+                    Elfer
+                </td>
+                <td class="bettable-r8">
                     Pkte
-                </div>
-            </div>
+                </td>
+            </tr>
 
-            <div class="div-row">
-                <div class="div-cell bettable-r1">
+            <tr>
+                <td class="bettable-r1">
                     Spielergebnis
-                </div>
-                <div class="div-cell right bettable-r2">
+                </td>
+                <td class="bettable-r2">
                     &nbsp;
-                </div>
-                <div class="div-cell center bettable-r3">
+                </td>
+                <td class="bettable-r3">
                     &nbsp;
-                </div>
-                <div class="div-cell bettable-r4">
+                </td>
+                <td class="bettable-r4">
                     &nbsp;
-                </div>
-                <div class="div-cell bettable-r5">
+                </td>
+                <td class="bettable-r5">
                     <div class="div-cell score-team1">
                         {{ matchbet.match.team1_score_regular | default_if_none:"" }}                    
                     </div>
@@ -56,8 +53,8 @@
                     <div class="div-cell score-team2">
                         {{ matchbet.match.team2_score_regular | default_if_none:"" }}
                     </div>
-                </div>
-                <div class="div-cell bettable-r6">
+                </td>
+                <td class="bettable-r6">
                     {% if  matchbet.match.has_overtime %}
                         <div class="div-cell score-team1">
                             {{ matchbet.match.team1_score_overtime | default_if_none:"" }}
@@ -69,8 +66,8 @@
                             {{ matchbet.match.team2_score_overtime | default_if_none:"" }}
                         </div>
                     {% endif %}
-                </div>
-                <div class="div-cell bettable-r7">
+                </td>
+                <td class="bettable-r7">
                     {% if matchbet.match.has_penalties %}
                         <div class="div-cell score-team1">
                             {{ matchbet.match.team1_score_penalties | default_if_none:"" }}
@@ -82,14 +79,19 @@
                             {{ matchbet.match.team2_score_penalties | default_if_none:"" }}
                         </div>
                     {% endif %}
-                </div>
-                <div class="div-cell bettable-r8">
+                </td>
+                <td class="bettable-r8">
                     -
-                </div>
-            </div>
+                </td>
+            </tr>
             
             {% for mybet in matchbet.mybetlist %}
-                {% include "bet/_bet.html" %}
+                {% if matchbet.match.status == 10 and mybet.frmbet.instance.account.membership.user.id == user.id %}
+                    {% include "bet/_frmbet.html" %}
+                {% else %}
+                    {% include "bet/_bet.html" %}
+                {% endif %}
             {% endfor %}
-        </div>
+        </table>
+        <div class="gap"></div>
        
