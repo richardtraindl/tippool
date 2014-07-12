@@ -13,38 +13,70 @@ from bet.forms import BetForm
 
 
 
-class PoolUserBet(object):
+class PoolUserBet2(object):
     def __init__(self, pool=None, user=None, bet=None):
         self.pool = pool
         self.user = user
         self.bet = bet
 
-class MatchBet(object):
+class MatchBet2(object):
     def __init__(self, match=None):
         self.match = match
         self.betlist = []
 
+class MyBet(object):
+    def __init__(self, pool=None, user=None, frmbet=None):
+        self.pool = pool
+        self.user = user
+        self.frmbet = frmbet
+
+class MatchBet(object):
+    def __init__(self, match=None):
+        self.match = match
+        self.mybetlist = []
+
+class MyEvent(object):
+    def __init__(self, parent=None):
+        self.parent = parent
+        self.sublist = []
 
 
-def mybets(request, eventid=1):
+
+def mybets(request, eventid=None):
     context = RequestContext(request)
+    print(eventid)
 
     # all pools where user is member
-    pools = Pool.objects.filter(membership__user_id=request.user.id, active=True)
+    pools = Pool.objects.filter(membership__user_id=request.user.id, active=1)
+    print(len(pools))
+    # all events for choosen pool
+    superevents = Event.objects.filter(poolevent__pool__membership__user_id=request.user.id, \
+                                        active=1, is_super=1).distinct()
+    
+    
+    myevents = []
+    for event in superevents:
+        myevent = MyEvent()
+        myevent.parent = event
+        myevent.sublist = Event.objects.filter(parent_id=event.id, active=1)
+        myevents.append(myevent)
+    
+    standaloneevents = Event.objects.filter(poolevent__pool__membership__user_id=request.user.id, \
+                                    active=1, is_super=0).exclude(parent_id__isnull=False).distinct()
+    for event in standaloneevents:
+        myevent = MyEvent()
+        myevent.parent = None
+        myevent.sublist.append(event)
+        myevents.append(myevent)
 
     # event
     if eventid == None:
-        event = Event.objects.get(poolevent__pool_id=pools[0].id, active=True)
+        event = myevents[0].sublist[0]
     else:
         event = Event.objects.get(id=eventid)
 
-
-    # all events for choosen pool
-    events = Event.objects.filter(poolevent__pool__membership__user_id=request.user.id, \
-                                    active=True).distinct()
-
     # all matches for choosen event
-    matches = Match.objects.all().filter(event_id=event.id)
+    matches = Match.objects.filter(event_id=event.id)
 
     # all bets for choosen pool and event
     matchbets = []
@@ -64,22 +96,22 @@ def mybets(request, eventid=1):
 
             try:
                 bet = Bet.objects.get(match_id=match.id, account_id=account.id)
-                pooluserbet = PoolUserBet()
-                pooluserbet.pool = pool
-                pooluserbet.user = request.user
-                pooluserbet.bet = bet
-                matchbet.betlist.append(pooluserbet)
+                mybet = MyBet()
+                mybet.pool = pool
+                mybet.user = request.user
+                mybet.frmbet = BetForm(instance=bet)
+                matchbet.mybetlist.append(mybet)
             except Bet.DoesNotExist:
                 bet = Bet()
                 bet.match_id = match.id
                 bet.account_id = account.id
                 bet.save()
-                pooluserbet = PoolUserBet(pool, request.user, bet)
-                matchbet.betlist.append(pooluserbet)
-
+                mybet = MyBet(pool, request.user, BetForm(instance=bet))
+                matchbet.mybetlist.append(mybet)
+        
         matchbets.append(matchbet)
 
-    return render(request, 'bet/mybets.html', {'body_id': 'mybets', 'events': events, 'event': event,  'matchbets': matchbets, 'user': request.user } )
+    return render(request, 'bet/mybets.html', {'body_id': 'mybets', 'myevents': myevents, 'event': event,  'matchbets': matchbets, 'user': request.user } )
 
 
 
@@ -115,11 +147,11 @@ def bets(request, poolid=1, eventid=1):
         try:
             bets = Bet.objects.filter(match_id=match.id, account__membership__pool_id=pool.id)
             for bet in bets:
-                pooluserbet = PoolUserBet()
-                pooluserbet.pool = pool
-                pooluserbet.user = request.user
-                pooluserbet.bet = bet
-                matchbet.betlist.append(pooluserbet)
+                mybet = MyBet()
+                mybet.pool = pool
+                mybet.user = request.user
+                mybet.frmbet = BetForm(instance=bet)
+                matchbet.mybetlist.append(mybet)
         except Bet.DoesNotExist:
             continue
 
@@ -147,8 +179,8 @@ def do_bet(request):
 
         if bet.accept() == False:
             match = Match.objects.get(id=bet.match_id)
-            if match.status_id == 10:
-                match.status_id = 20
+            if match.status == 10:
+                match.status = 20
                 match.save()
 
             return HttpResponseRedirect(url)

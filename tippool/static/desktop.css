@@ -284,10 +284,21 @@ img.left-spacer  {
 }
 
 
-.score-team{
+.score-team1{
     width: 44%;
+    text-align: right;
 }
 
 .score-hyphen{
     width: 2%;
 }
+
+.score-team2{
+    width: 44%;
+    text-align: left;
+}
+
+select {
+    width: 40px;
+}
+

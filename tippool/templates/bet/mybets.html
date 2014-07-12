@@ -12,13 +12,20 @@ Tipps
 <div class="small-gap"></div>
 
 <div class="subnav">
-    {% for evt in events %}
-        {% if evt == event %}
-            {{ evt.label }} |
-        {% else %}
-            <a href="{% url 'bet.views.mybets' evt.id %}">{{ evt.label }}</a> |
-        {% endif %}
+    <ul style="list-style-type: none">
+    {% for myevt in myevents %}
+        <li>
+            {{ myevt.parent.label | default_if_none:"" }}:
+            {% for sub in myevt.sublist %}
+                {% if sub == event %}
+                    {{ sub.label }} |
+                {% else %}
+                    <a href="{% url 'bet.views.mybets' sub.id %}">{{ sub.label }}</a> |
+                {% endif %}
+            {% endfor %}
+        </li>
     {% endfor %}
+    </ul>
 </div>
 
 

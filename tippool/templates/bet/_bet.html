@@ -1,11 +1,15 @@
 
 
             <div class="div-row bets {% cycle 'even-row' 'odd-row' %}">
+            {% if matchbet.match.status == 10 and mybet.frmbet.instance.account.membership.user.id == user.id %}
+              <form id="do_bet" method="post" action="/bet/do_bet/">
+              {% csrf_token %}
+            {% endif %}
                 <div class="div-cell bettable-r1">
                     {% if body_id == 'mybets' %}
-                        {{ bitem.pool.label }}
+                        {{ mybet.pool.label }}
                     {% elif body_id == 'bets' %}
-                        {{ bitem.bet.account.membership.user.username }}
+                        {{ mybet.frmbet.instance.account.membership.user.username }}
                     {% else %}
                         &nbsp;
                     {% endif %}
@@ -20,92 +24,98 @@
                     &nbsp;
                 </div>
                 <div class="div-cell bettable-r5">
-                  <form id="do_bet" method="post" action="/bet/do_bet/">
-                    {% csrf_token %}
-                    {% if bitem.bet.match.status.id == 10 and bitem.bet.account.membership.user_id == user.id %}
-                        <input type="hidden" name="bet" value="{{bitem.bet.id}}" />
-                        {% if body_id == 'mybets' %}
-                            <input type="hidden" name="url" value="/bet/mybets/{{event.id}}" />
-                        {% else %}
-                            <input type="hidden" name="url" value="/bet/bets/{{pool.id}}/{{event.id}}" />
-                        {% endif %}
-                        <div class="div-cell score-team">
-                            <input type="text" name="team1_score_regular" value="{{ bitem.bet.team1_score_regular | default_if_none:"" }}" size="1" style="width: 90%" />
-                        </div>
-                        <div class="div-cell score-hyphen">
-                            -
-                        </div>
-                        <div class="div-cell score-team">
-                            <input type="text" name="team2_score_regular" value="{{ bitem.bet.team2_score_regular | default_if_none:"" }}" size="1" style="width: 90%" />
-                        </div>
+                  {% if matchbet.match.status == 10 and mybet.frmbet.instance.account.membership.user.id == user.id %}
+                    <input type="hidden" name="bet" value="{{mybet.frmbet.instance.id}}" />
+
+                    {% if body_id == 'mybets' %}
+                      <input type="hidden" name="url" value="/bet/mybets/{{event.id}}" />
                     {% else %}
-                        <div class="div-cell score-team">
-                            {{ bitem.bet.team1_score_regular | default_if_none:"" }}
-                        </div>
-                        <div class="div-cell score-hyphen">
-                            -
-                        </div>
-                        <div class="div-cell score-team">
-                            {{ bitem.bet.team2_score_regular | default_if_none:"" }}
-                        </div>
+                      <input type="hidden" name="url" value="/bet/bets/{{pool.id}}/{{event.id}}" />
                     {% endif %}
+                  
+                    <div class="div-cell score-team1">
+                        {{ mybet.frmbet.team1_score_regular }}
+                    </div>
+                    <div class="div-cell score-hyphen">
+                        -
+                    </div>
+                    <div class="div-cell score-team2">
+                        {{ mybet.frmbet.team2_score_regular }}
+                    </div>
+                  {% else %}
+                    <div class="div-cell score-team1">
+                        {{ mybet.frmbet.team1_score_regular.value | default_if_none:"" }}
+                    </div>
+                    <div class="div-cell score-hyphen">
+                        -
+                    </div>
+                    <div class="div-cell score-team2">
+                        {{ mybet.frmbet.team2_score_regular.value | default_if_none:"" }}
+                    </div>
+                  {% endif %}
                 </div>
                 <div class="div-cell bettable-r6">
-                    {% if bitem.bet.match.status.id == 10 and bitem.bet.overtime %}
-                        {% if bitem.bet.account.membership.user_id == user.id %}
-                            <div class="div-cell score-team">
-                                <input type="text" name="team1_score_overtime" value="{{ bitem.bet.team1_score_overtime | default_if_none:"" }}" size="1" />
-                            </div>
-                            <div class="div-cell score-hyphen">
-                                -
-                            </div>
-                            <div class="div-cell score-team">
-                                <input type="text" name="team2_score_overtime" value="{{ bitem.bet.team2_score_overtime | default_if_none:"" }}" size="1" />
-                            </div>
-                        {% else %}
-                            <div class="div-cell score-team">
-                                {{ bitem.bet.team1_score_overtime | default_if_none:"" }}
-                            </div>
-                            <div class="div-cell score-hyphen">
-                                -
-                            </div>
-                            <div class="div-cell score-team">
-                                {{ bitem.bet.team2_score_overtime | default_if_none:"" }}
-                            </div>
-                        {% endif %}
+                    {% if mybet.frmbet.overtime %}
+                      {% if matchbet.match.status == 10 and mybet.frmbet.instance.account.membership.user.id == user.id %}  
+                        <div class="div-cell score-team1">
+                            <input type="text" name="team1_score_overtime" value="{{ mybet.bet.team1_score_overtime | default_if_none:"" }}" size="1" />
+                        </div>
+                        <div class="div-cell score-hyphen">
+                            -
+                        </div>
+                        <div class="div-cell score-team2">
+                            <input type="text" name="team2_score_overtime" value="{{ mybet.bet.team2_score_overtime | default_if_none:"" }}" size="1" />
+                        </div>                    
+                      {% else %}
+                        <div class="div-cell score-team1">
+                            {{ mybet.frmbet.team1_score_overtime.value | default_if_none:"" }}
+                        </div>
+                        <div class="div-cell score-hyphen">
+                            -
+                        </div>
+                        <div class="div-cell score-team2">
+                            {{ mybet.frmbet.team2_score_overtime.value | default_if_none:"" }}
+                        </div>
+                      {% endif %}
+                    {% else %}
+                        &nbsp;
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r7">
-                    {% if bitem.bet.match.status.id == 10 and bitem.bet.penalties %}
-                        {% if bitem.bet.account.membership.user_id == user.id %}
-                            <div class="div-cell score-team">
-                                <input type="text" name="team1_score_penalties" value="{{ bitem.bet.team1_score_penalties | default_if_none:"" }}" size="1" />
-                            </div>
-                            <div class="div-cell score-hyphen">
-                                -
-                            </div>
-                            <div class="div-cell score-team">
-                                <input type="text" name="team2_score_penalties" value="{{ bitem.bet.team2_score_penalties | default_if_none:"" }}" size="1" />
-                            </div>
-                        {% else %}
-                            <div class="div-cell score-team">
-                                {{ bitem.bet.team1_score_penalties | default_if_none:"" }}
-                            </div>
-                            <div class="div-cell score-hyphen">
-                                -
-                            </div>
-                            <div class="div-cell score-team">
-                                {{ bitem.bet.team2_score_penalties | default_if_none:"" }}
-                            </div>
-                        {% endif %}
+                    {% if mybet.frmbet.penalties %}
+                      {% if matchbet.match.status == 10 and mybet.frmbet.instance.account.membership.user.id == user.id %}  
+                        <div class="div-cell score-team1">
+                            <input type="text" name="team1_score_penalties" value="{{ mybet.bet.team1_score_penalties | default_if_none:"" }}" size="1" />
+                        </div>
+                        <div class="div-cell score-hyphen">
+                            -
+                        </div>
+                        <div class="div-cell score-team2">
+                            <input type="text" name="team2_score_penalties" value="{{ mybet.bet.team2_score_penalties | default_if_none:"" }}" size="1" />
+                        </div>
+                      {% else %}
+                        <div class="div-cell score-team1">
+                            {{ mybet.frmbet.team1_score_penalties.value | default_if_none:"" }}
+                        </div>
+                        <div class="div-cell score-hyphen">
+                            -
+                        </div>
+                        <div class="div-cell score-team2">
+                            {{ mybet.frmbet.team2_score_penalties.value | default_if_none:"" }}
+                        </div>
+                      {% endif %}
+                    {% else %}
+                        &nbsp;
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r8">
-                    {% if bitem.bet.match.status.id == 10 and bitem.bet.account.membership.user_id == user.id %}
-                        <input type="submit" value="tipp" />
-                    {% elif bitem.bet.match.status.id == 30 %}
-                        {{ bitem.bet.rating | default_if_none:"" }}
-                    {% endif %}
-                    </form>
+                  {% if matchbet.match.status == 10 and mybet.frmbet.instance.account.membership.user.id == user.id %}  
+                    <input type="submit" value="tipp" />
+                  {% else %}
+                    {{ mybet.frmbet.rating | default_if_none:"" }}
+                  {% endif %}
                 </div>
-            </div>
+          {% if matchbet.match.status == 10 and mybet.frmbet.instance.account.membership.user.id == user.id %}  
+            </form>
+          {% endif %}
+        </div>

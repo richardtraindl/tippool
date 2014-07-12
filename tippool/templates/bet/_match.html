@@ -47,38 +47,38 @@
                     &nbsp;
                 </div>
                 <div class="div-cell bettable-r5">
-                    <div class="div-cell score-team">
+                    <div class="div-cell score-team1">
                         {{ matchbet.match.team1_score_regular | default_if_none:"" }}                    
                     </div>
                     <div class="div-cell score-hyphen">
                         -
                     </div>
-                    <div class="div-cell score-team">
+                    <div class="div-cell score-team2">
                         {{ matchbet.match.team2_score_regular | default_if_none:"" }}
                     </div>
                 </div>
                 <div class="div-cell bettable-r6">
                     {% if  matchbet.match.has_overtime %}
-                        <div class="div-cell score-team">
+                        <div class="div-cell score-team1">
                             {{ matchbet.match.team1_score_overtime | default_if_none:"" }}
                         </div>
                         <div class="div-cell score-hyphen">
                             -
                         </div>
-                        <div class="div-cell score-team">
+                        <div class="div-cell score-team2">
                             {{ matchbet.match.team2_score_overtime | default_if_none:"" }}
                         </div>
                     {% endif %}
                 </div>
                 <div class="div-cell bettable-r7">
                     {% if matchbet.match.has_penalties %}
-                        <div class="div-cell score-team">
+                        <div class="div-cell score-team1">
                             {{ matchbet.match.team1_score_penalties | default_if_none:"" }}
                         </div>
                         <div class="div-cell score-hyphen">
                             -
                         </div>
-                        <div class="div-cell score-team">
+                        <div class="div-cell score-team2">
                             {{ matchbet.match.team2_score_penalties | default_if_none:"" }}
                         </div>
                     {% endif %}
@@ -88,7 +88,7 @@
                 </div>
             </div>
             
-            {% for bitem in matchbet.betlist %}
+            {% for mybet in matchbet.mybetlist %}
                 {% include "bet/_bet.html" %}
             {% endfor %}
         </div>

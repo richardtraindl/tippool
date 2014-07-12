@@ -6,7 +6,7 @@
     "fields": {
       "name": "Brasilien",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -15,7 +15,7 @@
     "fields": {
       "name": "Kroatien",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -24,7 +24,7 @@
     "fields": {
       "name": "Mexiko",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -33,7 +33,7 @@
     "fields": {
       "name": "Kamerun",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -42,7 +42,7 @@
     "fields": {
       "name": "Spanien",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -51,7 +51,7 @@
     "fields": {
       "name": "Niederlande",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -60,7 +60,7 @@
     "fields": {
       "name": "Chile",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -69,7 +69,7 @@
     "fields": {
       "name": "Australien",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -78,7 +78,7 @@
     "fields": {
       "name": "Kolumbien",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -87,7 +87,7 @@
     "fields": {
       "name": "Griechenland",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -96,7 +96,7 @@
     "fields": {
       "name": "Elfenbeink.",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -105,7 +105,7 @@
     "fields": {
       "name": "Japan",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -114,7 +114,7 @@
     "fields": {
       "name": "Uruguay",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -123,7 +123,7 @@
     "fields": {
       "name": "Costa Rica",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },  
   {
@@ -132,7 +132,7 @@
     "fields": {
       "name": "England",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -141,7 +141,7 @@
     "fields": {
       "name": "Italien",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -150,7 +150,7 @@
     "fields": {
       "name": "Schweiz",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -159,7 +159,7 @@
     "fields": {
       "name": "Ecuador",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -168,7 +168,7 @@
     "fields": {
       "name": "Frankreich",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -177,7 +177,7 @@
     "fields": {
       "name": "Südkorea",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -186,7 +186,7 @@
     "fields": {
       "name": "Honduras",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -195,7 +195,7 @@
     "fields": {
       "name": "Argentinien",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -204,7 +204,7 @@
     "fields": {
       "name": "Bosnien-Herz.",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -213,7 +213,7 @@
     "fields": {
       "name": "Iran",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -222,7 +222,7 @@
     "fields": {
       "name": "Nigeria",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -231,7 +231,7 @@
     "fields": {
       "name": "Deutschland",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -240,7 +240,7 @@
     "fields": {
       "name": "Portugal",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -249,7 +249,7 @@
     "fields": {
       "name": "Ghana",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -258,7 +258,7 @@
     "fields": {
       "name": "USA",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -267,7 +267,7 @@
     "fields": {
       "name": "Belgien",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -276,7 +276,7 @@
     "fields": {
       "name": "Algerien",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -285,7 +285,7 @@
     "fields": {
       "name": "Russland",
       "logo": "",
-      "active": "1"
+      "active": 1
     }
   },
   {
@@ -347,7 +347,7 @@
     "pk": 1,
     "fields": {
       "label": "Tippool 1",
-      "active": "1",
+      "active": 1,
       "scorerule": 1
     }
   },
@@ -356,7 +356,7 @@
     "pk": 2,
     "fields": {
       "label": "Tippool 2",
-      "active": "1",
+      "active": 1,
       "scorerule": 2
     }
   },
@@ -364,7 +364,8 @@
     "model": "bet.event",
     "pk": 1,
     "fields": {
-      "label": "WM 14"
+      "label": "WM 14",
+      "is_super": 1
     }
   },
   {
