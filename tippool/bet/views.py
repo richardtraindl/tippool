@@ -7,6 +7,7 @@ from itertools import chain
 from django.shortcuts import get_object_or_404
 import datetime
 from dateutil.tz import tzlocal
+from django.contrib.auth.models import User, Group
 from bet.models import Event, EventManager, Match, Team, Membership, Pool, PoolEvent, Account, Bet
 from bet.forms import BetForm
 
@@ -96,10 +97,10 @@ def mybets(request, eventid=None):
 
             try:
                 bet = Bet.objects.get(match_id=match.id, account_id=account.id)
-                mybet = MyBet()
-                mybet.pool = pool
-                mybet.user = request.user
-                mybet.frmbet = BetForm(instance=bet)
+                mybet = MyBet(pool, request.user, BetForm(instance=bet))
+                #mybet.pool = pool
+                #mybet.user = request.user
+                #mybet.frmbet = BetForm(instance=bet)
                 matchbet.mybetlist.append(mybet)
             except Bet.DoesNotExist:
                 bet = Bet()
@@ -115,7 +116,7 @@ def mybets(request, eventid=None):
 
 
 
-def bets(request, poolid=1, eventid=1):
+def bets(request, poolid=None, eventid=None):
     context = RequestContext(request)
 
     # pool
@@ -126,7 +127,7 @@ def bets(request, poolid=1, eventid=1):
 
     # event
     if eventid == None:
-        event = Event.objects.get(poolevent__pool_id=pool.id, active=True)
+        event = Event.objects.filter(poolevent__pool_id=pool.id, active=True)[:1].get()
     else:
         event = Event.objects.get(id=eventid)
 
@@ -149,7 +150,8 @@ def bets(request, poolid=1, eventid=1):
             for bet in bets:
                 mybet = MyBet()
                 mybet.pool = pool
-                mybet.user = request.user
+                # mybet.user = request.user
+                mybet.user = User.objects.get(membership__account__id=bet.account_id)
                 mybet.frmbet = BetForm(instance=bet)
                 matchbet.mybetlist.append(mybet)
         except Bet.DoesNotExist:
@@ -192,8 +194,9 @@ def do_bet(request):
             # return HttpResponseRedirect("/bet/mybets/" + str(match.event_id))
         else:
             # The supplied form contained errors - just print them to the terminal.
-            print form.errors
-            return HttpResponse(form.errors)
+            error = "<html><body>Fehler bei Tippabgabe.</body></html>"
+            return HttpResponse(error)
+            #return HttpResponse(form.errors)
     else:
         return HttpResponse("error")
 

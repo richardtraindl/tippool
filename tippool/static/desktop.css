@@ -216,7 +216,11 @@ img.left-spacer  {
     border-collapse: collapse;
 }
 
-.matchtable tr {
+.matchtable tr:nth-child(2) {
+    background-color: lightgray;
+}
+
+.matchtable tr:first-child {
     background-color: lightblue;
 }
 
@@ -225,15 +229,7 @@ img.left-spacer  {
 }
 
 .matchtable .div-cell, .bettable .div-cell, .matchtable td, .bettable td{
-    background-color: lightblue; // #F0F0F0
-}
-
-.even-row .div-cell{
-    background-color: #F0F0F0;
-}
-
-.odd-row .div-cell{
-    background-color: #DCDCDC; // #F0FFF0
+    /* background-color: lightblue; */ // #F0F0F0
 }
 
 .timetable-r1{
