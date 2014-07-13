@@ -49,12 +49,10 @@ def mybets(request, eventid=None):
 
     # all pools where user is member
     pools = Pool.objects.filter(membership__user_id=request.user.id, active=1)
-    print(len(pools))
-    # all events for choosen pool
+
+    # all events where user is registered through pools
     superevents = Event.objects.filter(poolevent__pool__membership__user_id=request.user.id, \
                                         active=1, is_super=1).distinct()
-    
-    
     myevents = []
     for event in superevents:
         myevent = MyEvent()
@@ -125,9 +123,28 @@ def bets(request, poolid=None, eventid=None):
     else:
         pool = Pool.objects.get(id=poolid)
 
+    # all events for choosen pool
+    superevents = Event.objects.filter(poolevent__pool_id=pool.id, active=1, \
+                        is_super=1).distinct()
+    myevents = []
+    for event in superevents:
+        myevent = MyEvent()
+        myevent.parent = event
+        myevent.sublist = Event.objects.filter(parent_id=event.id, active=1)
+        myevents.append(myevent)
+
+    standaloneevents = Event.objects.filter(poolevent__pool_id=pool.id, active=1, \
+                            is_super=0).exclude(parent_id__isnull=False).distinct()
+    for event in standaloneevents:
+        myevent = MyEvent()
+        myevent.parent = None
+        myevent.sublist.append(event)
+        myevents.append(myevent)
+
     # event
     if eventid == None:
-        event = Event.objects.filter(poolevent__pool_id=pool.id, active=True)[:1].get()
+        # event = Event.objects.filter(poolevent__pool_id=pool.id, active=True)[:1].get()
+        event = myevents[0].sublist[0]
     else:
         event = Event.objects.get(id=eventid)
 
@@ -135,7 +152,7 @@ def bets(request, poolid=None, eventid=None):
     pools = Pool.objects.filter(membership__user_id=request.user.id, active=True)
 
     # all events for choosen pool
-    events = Event.objects.filter(poolevent__pool_id=pool.id, active=True)
+    # events = Event.objects.filter(poolevent__pool_id=pool.id, active=True)
 
     # all matches for choosen event
     matches = Match.objects.filter(event_id=event.id)
@@ -159,7 +176,7 @@ def bets(request, poolid=None, eventid=None):
 
         matchbets.append(matchbet)
 
-    return render(request, 'bet/bets.html', {'body_id': 'bets', 'pools': pools, 'pool': pool, 'events': events, 'event': event, 'matchbets': matchbets, 'user': request.user } )
+    return render(request, 'bet/bets.html', {'body_id': 'bets', 'pools': pools, 'pool': pool, 'myevents': myevents, 'event': event, 'matchbets': matchbets, 'user': request.user } )
 
 
 
@@ -191,12 +208,22 @@ def do_bet(request):
         if form.is_valid():
             form.save(commit=True)
             return HttpResponseRedirect(url)
-            # return HttpResponseRedirect("/bet/mybets/" + str(match.event_id))
         else:
-            # The supplied form contained errors - just print them to the terminal.
-            error = "<html><body>Fehler bei Tippabgabe.</body></html>"
-            return HttpResponse(error)
-            #return HttpResponse(form.errors)
+            error_list = "<ul>"
+            for field in form:
+                if len(field.errors) > 0:
+                    error_list += "<li>"
+                    error_list += str(field.name)
+                    error_list += str(field.errors)
+                    error_list += "</li>"
+            error_list += "</ul>"
+
+            msg = "<html><body>\
+                    <h2>Fehler bei Tippabgabe:</h2>" + \
+                    error_list + \
+                    "<p><a href=" + url + ">back</a></p>\
+                   </body></html>"
+            return HttpResponse(msg)
     else:
         return HttpResponse("error")
 

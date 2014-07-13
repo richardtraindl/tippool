@@ -22,13 +22,20 @@ Tipps
 </div>
 
 <div class="subnav">
-    {% for eitem in events %}
-        {% if eitem == event %}
-            {{ eitem.label }} |
-        {% else %}
-            <a href="{% url 'bet.views.bets' pool.id eitem.id %}">{{ eitem.label }}</a> |
-        {% endif %}
+    <ul style="list-style-type: none">
+    {% for myevt in myevents %}
+        <li>
+            {{ myevt.parent.label | default_if_none:"" }}
+            {% for sub in myevt.sublist %}
+                {% if sub == event %}
+                    {{ sub.label }} |
+                {% else %}
+                    <a href="{% url 'bet.views.bets' pool.id sub.id %}">{{ sub.label }}</a> |
+                {% endif %}
+            {% endfor %}
+        </li>
     {% endfor %}
+    </ul>
 </div>
 
 <div class="subnav">Meine Tipps | alle Tipps</div>
