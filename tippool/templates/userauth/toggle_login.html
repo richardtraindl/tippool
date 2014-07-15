@@ -2,10 +2,9 @@
 
 
 {% if user.is_authenticated %}
-    Hallo {{ user.username }} | 
+    {{ user.username }} | 
     <a href="{% url 'userauth.views.user_password_change' %}">Passwort ändern</a> | 
-
-    <a href="{% url 'userauth.views.user_logout' %}">Logout</a></p>
+    <a href="{% url 'userauth.views.user_logout' %}">Logout</a>
 {% else %}    
-    <p><a href="{% url 'userauth.views.user_login' %}">Login</a></p>
+    <a href="{% url 'userauth.views.user_login' %}">Login</a>
 {% endif %}
