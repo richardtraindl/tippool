@@ -21,6 +21,8 @@ class BetForm(ModelForm):
         if not valid:
             return valid
 
+        match = Match.objects.get(id=self.instance.match_id)
+
         team1_score_regular = self.cleaned_data['team1_score_regular']
         team2_score_regular = self.cleaned_data['team2_score_regular']
         if team1_score_regular == None or team2_score_regular == None:
@@ -28,7 +30,7 @@ class BetForm(ModelForm):
             self._errors['team2_score_regular'] = ': number expected'
             return False
  
-        if self.instance.overtime:
+        if match.has_overtime == 1:
             team1_score_overtime = self.cleaned_data['team1_score_overtime']
             team2_score_overtime = self.cleaned_data['team2_score_overtime']
             if team1_score_overtime == None or team2_score_overtime == None:
@@ -36,7 +38,7 @@ class BetForm(ModelForm):
                 self._errors['team2_score_overtime'] = ': number expected'
                 return False
 
-        if self.instance.penalties:
+        if match.has_penalties == 1:
             team1_score_penalties = self.cleaned_data['team1_score_penalties']
             team2_score_penalties = self.cleaned_data['team2_score_penalties']
             if team1_score_penalties == None or team2_score_penalties == None:

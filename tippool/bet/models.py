@@ -49,7 +49,9 @@ class Choices():
 
 class ScoreRule(models.Model):
     label = models.CharField(max_length=100, unique=True)
-    one_two_draw = models.PositiveSmallIntegerField(null=False, default=0)
+    one_two_draw_regular = models.PositiveSmallIntegerField(null=False, default=0)
+    one_two_draw_overtime = models.PositiveSmallIntegerField(null=False, default=0)
+    one_two_draw_penalties = models.PositiveSmallIntegerField(null=False, default=0)
     regular = models.PositiveSmallIntegerField(null=False, default=0)
     overtime = models.PositiveSmallIntegerField(null=False, default=0)
     penalties = models.PositiveSmallIntegerField(null=False, default=0)
@@ -186,7 +188,6 @@ class Match(models.Model):
     event = models.ForeignKey(Event)
     begin = models.DateTimeField()
     status = models.IntegerField(choices=Choices.STATUS_CHOICES, null=False, default=10)
-    # status = models.ForeignKey(Status)
     has_overtime = models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
     has_penalties = models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
     team1 = models.ForeignKey(Team, related_name='match_team1')
@@ -204,12 +205,32 @@ class Match(models.Model):
     def __unicode__(self): 
         return self.begin.strftime('%d.%m.%Y') + "/" + "/" + self.event.label  +  "/" + self.team1.name + " : " + self.team2.name
 
-    def get_one_two_draw(self):
+    def get_12X_regular(self):
         if self.status != 30 or self.team1_score_regular == None or self.team2_score_regular == None:
             return None
         elif self.team1_score_regular > self.team2_score_regular:
             return 1
         elif self.team1_score_regular < self.team2_score_regular:
+            return 2
+        else:
+            return 0
+
+    def get_12X_overtime(self):
+        if self.status != 30 or self.team1_score_overtime == None or self.team2_score_overtime == None:
+            return None
+        elif self.team1_score_overtime > self.team2_score_overtime:
+            return 1
+        elif self.team1_score_overtime < self.team2_score_overtime:
+            return 2
+        else:
+            return 0
+
+    def get_12X_penalties(self):
+        if self.status != 30 or self.team1_score_penalties == None or self.team2_score_penalties == None:
+            return None
+        elif self.team1_score_penalties > self.team2_score_penalties:
+            return 1
+        elif self.team1_score_penalties < self.team2_score_penalties:
             return 2
         else:
             return 0
@@ -225,8 +246,8 @@ class Bet(models.Model):
 
     match= models.ForeignKey(Match)
     account= models.ForeignKey(Account)
-    overtime= models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
-    penalties = models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
+    # overtime= models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
+    # penalties = models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
     team1_score_regular = models.PositiveSmallIntegerField(choices=Choices.GOAL_CHOICES, null=True, blank=True, default=None)
     team1_score_overtime = models.PositiveSmallIntegerField(choices=Choices.GOAL_CHOICES, null=True, blank=True, default=None)
     team1_score_penalties = models.PositiveSmallIntegerField(choices=Choices.GOAL_CHOICES, null=True, blank=True, default=None)
@@ -247,7 +268,7 @@ class Bet(models.Model):
                 self.match.team2.name
 
 
-    def get_one_two_draw(self):
+    def get_12X_regular(self):
         if self.team1_score_regular == None or self.team2_score_regular == None:
             return None
         if self.team1_score_regular > self.team2_score_regular:
@@ -257,22 +278,53 @@ class Bet(models.Model):
         else:
             return 0
 
+    def get_12X_overtime(self):
+        if self.team1_score_overtime == None or self.team2_score_overtime == None:
+            return None
+        if self.team1_score_overtime > self.team2_score_overtime:
+            return 1
+        elif self.team1_score_overtime < self.team2_score_overtime:
+            return 2
+        else:
+            return 0
 
-    def accept(self):
+    def get_12X_penalties(self):
+        if self.team1_score_penalties == None or self.team2_score_penalties == None:
+            return None
+        if self.team1_score_penalties > self.team2_score_penalties:
+            return 1
+        elif self.team1_score_penalties < self.team2_score_penalties:
+            return 2
+        else:
+            return 0
+
+    def is_acceptable(self):
         match = Match.objects.get(id=self.match_id)
-
         return match.status == 10 and datetime.datetime.now(tzlocal()) < match.begin
 
+    def is_bet_equal_match_regular(self):
+        match = Match.objects.get(id=self.match_id)
+        return self.team1_score_regular == match.team1_score_regular and \
+            self.team2_score_regular == match.team2_score_regular
+
+    def is_bet_equal_match_overtime(self):
+        match = Match.objects.get(id=self.match_id)
+        return self.team1_score_overtime == match.team1_score_overtime and \
+            self.team2_score_overtime == match.team2_score_overtime
+
+    def is_bet_equal_match_penalties(self):
+        match = Match.objects.get(id=self.match_id)
+        return self.team1_score_penalties == match.team1_score_penalties and \
+            self.team2_score_penalties == match.team2_score_penalties
 
     def rate(self):
         score = 0
-        b_one_two_draw = self.get_one_two_draw()
-        
-        match = Match.objects.get(id=self.match_id)
-        
-        m_one_two_draw = match.get_one_two_draw()
+        b_12X_regular = self.get_12X_regular()
 
-        if b_one_two_draw == None or m_one_two_draw == None:
+        match = Match.objects.get(id=self.match_id)
+        m_12X_regular = match.get_12X_regular()
+
+        if b_12X_regular == None or m_12X_regular == None:
             self.rating = score
             return None
 
@@ -281,35 +333,24 @@ class Bet(models.Model):
         pool = Pool.objects.get(id=membership.pool_id)
         scorerule = ScoreRule.objects.get(id=pool.scorerule_id)
 
-        if b_one_two_draw == m_one_two_draw:
-            score += scorerule.one_two_draw
+        if b_12X_regular == m_12X_regular:
+            score += scorerule.one_two_draw_regular
 
-            if self.result_equal("regular"):
+            if self.is_bet_equal_match_regular():
                 score += scorerule.regular
+
             if match.has_overtime:
-                if self.result_equal("overtime"):
-                    score += scorerule.overtime
+                if self.get_12X_overtime() == match.get_12X_overtime():
+                    score += scorerule.one_two_draw_overtime
+                    if self.is_bet_equal_match_overtime():
+                        score += scorerule.overtime
+
             if match.has_penalties:
-                if self.result_equal("penalties"):
-                    score += scorerule.penalties
+                if self.get_12X_penalties() == match.get_12X_penalties():
+                    score += scorerule.one_two_draw_penalties
+                    if self.is_bet_equal_match_penalties():
+                        score += scorerule.penalties
 
         self.rating = score
         self.save()
         return score
-
-
-    def result_equal(self, _switch):
-        match = Match.objects.get(id=self.match_id)
-
-        if _switch == "regular":
-            return self.team1_score_regular == match.team1_score_regular and \
-                    self.team2_score_regular == match.team2_score_regular
-        elif _switch == "overtime":
-            return self.team1_score_overtime == match.team1_score_overtime and \
-                    self.team2_score_overtime == match.team2_score_overtime
-        elif _switch == "penalties":
-            return self.team1_score_penalties == match.team1_score_penalties and \
-                    self.team2_score_penalties == match.team2_score_penalties
-        else:
-            return False
-

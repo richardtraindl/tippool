@@ -196,7 +196,7 @@ def do_bet(request):
 
         bet = Bet.objects.get(id=bet_id)
 
-        if bet.accept() == False:
+        if bet.is_acceptable() == False:
             match = Match.objects.get(id=bet.match_id)
             if match.status == 10:
                 match.status = 20

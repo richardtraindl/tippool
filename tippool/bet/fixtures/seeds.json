@@ -325,7 +325,9 @@
     "pk": 1,
     "fields": {
       "label": "Regel 1",
-      "one_two_draw": 1,
+      "one_two_draw_regular": 1,
+      "one_two_draw_overtime": 0,
+      "one_two_draw_penalties": 0,
       "regular": 2,
       "overtime": 3,
       "penalties": 5
@@ -336,7 +338,9 @@
     "pk": 2,
     "fields": {
       "label": "Regel 2",
-      "one_two_draw": 1,
+      "one_two_draw_regular": 1,
+      "one_two_draw_overtime": 1,
+      "one_two_draw_penalties": 1,
       "regular": 1,
       "overtime": 2,
       "penalties": 3
