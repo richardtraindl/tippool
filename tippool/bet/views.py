@@ -149,7 +149,7 @@ def bets(request, poolid=None, eventid=None):
         event = Event.objects.get(id=eventid)
 
     # all pools where user is member
-    pools = Pool.objects.filter(membership__user_id=request.user.id, active=True)
+    pools = Pool.objects.filter(membership__user_id=request.user.id, active=1)
 
     # all events for choosen pool
     # events = Event.objects.filter(poolevent__pool_id=pool.id, active=True)
@@ -240,3 +240,26 @@ def admin(request):
             bet.rate()
 
     return render_to_response('bet/admin.html', {'body_id': 'admin', 'matches': matches}, context )
+
+
+
+def calc_points(request, req_username=None):
+    context = RequestContext(request)
+
+    # users
+    users = []
+    if req_username == None:
+        users = User.objects.filter()
+    else:
+        try:
+            users.append(User.objects.get(username=req_username))
+        except User.DoesNotExist:
+            users = User.objects.filter()
+
+    for user in users:
+        bets = Bet.objects.filter(account__membership__user_id=user.id)
+
+        for bet in bets:
+            bet.calc_points()
+
+    return HttpResponseRedirect('/bet/mybets')

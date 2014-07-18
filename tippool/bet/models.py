@@ -254,7 +254,7 @@ class Bet(models.Model):
     team2_score_regular = models.PositiveSmallIntegerField(choices=Choices.GOAL_CHOICES, null=True, blank=True, default=None)
     team2_score_overtime = models.PositiveSmallIntegerField(choices=Choices.GOAL_CHOICES, null=True, blank=True, default=None)
     team2_score_penalties = models.PositiveSmallIntegerField(choices=Choices.GOAL_CHOICES, null=True, blank=True, default=None)
-    rating = models.PositiveSmallIntegerField(null=True, blank=True)
+    points = models.PositiveSmallIntegerField(null=True, blank=True)
 
     class Meta:
         unique_together = (("account", "match"),)  
@@ -317,15 +317,15 @@ class Bet(models.Model):
         return self.team1_score_penalties == match.team1_score_penalties and \
             self.team2_score_penalties == match.team2_score_penalties
 
-    def rate(self):
-        score = 0
+    def calc_points(self):
+        pts = 0
         b_12X_regular = self.get_12X_regular()
 
         match = Match.objects.get(id=self.match_id)
         m_12X_regular = match.get_12X_regular()
 
         if b_12X_regular == None or m_12X_regular == None:
-            self.rating = score
+            self.points = pts
             return None
 
         account = Account.objects.get(id=self.account_id)
@@ -334,23 +334,23 @@ class Bet(models.Model):
         scorerule = ScoreRule.objects.get(id=pool.scorerule_id)
 
         if b_12X_regular == m_12X_regular:
-            score += scorerule.one_two_draw_regular
+            pts += scorerule.one_two_draw_regular
 
             if self.is_bet_equal_match_regular():
-                score += scorerule.regular
+                pts += scorerule.regular
 
             if match.has_overtime:
                 if self.get_12X_overtime() == match.get_12X_overtime():
-                    score += scorerule.one_two_draw_overtime
+                    pts += scorerule.one_two_draw_overtime
                     if self.is_bet_equal_match_overtime():
-                        score += scorerule.overtime
+                        pts += scorerule.overtime
 
             if match.has_penalties:
                 if self.get_12X_penalties() == match.get_12X_penalties():
-                    score += scorerule.one_two_draw_penalties
+                    pts += scorerule.one_two_draw_penalties
                     if self.is_bet_equal_match_penalties():
-                        score += scorerule.penalties
+                        pts += scorerule.penalties
 
-        self.rating = score
+        self.points = pts
         self.save()
-        return score
+        return pts

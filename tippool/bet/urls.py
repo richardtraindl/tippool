@@ -11,4 +11,6 @@ urlpatterns = patterns('bet.views',
     url(r'^do_bet/$', 'do_bet'),
     url(r'^ranking/$', 'ranking'),
     url(r'^admin/$', 'admin'),
+    url(r'^calc_points/$', 'calc_points'),
+    url(r'^calc_points/(?P<req_username>\w+\.*\w+)/$', 'calc_points'),
 )
