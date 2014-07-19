@@ -291,5 +291,7 @@ def ranking(request, poolid=None, eventid=None):
         myranking = MyRanking(pool, event, user, account)
         myrankings.append(myranking)
 
-    return render(request, 'bet/ranking.html', {'body_id': 'ranking', 'pools': pools, 'pool': pool, 'events': events, 'event': event, 'myrankings': myrankings} )
+    rankings = sorted(myrankings, key=lambda myranking: myranking.account.points, reverse=True)
+
+    return render(request, 'bet/ranking.html', {'body_id': 'ranking', 'pools': pools, 'pool': pool, 'events': events, 'event': event, 'myrankings': rankings } )
 
