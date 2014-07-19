@@ -11,4 +11,14 @@ Wertung
 
 <p>Wertung</p>
 
+    {% for myranking in myrankings %}
+        <p>
+        {{ myranking.pool.label }}
+        {{ myranking.event.label }}
+        {{ myranking.user.username }}
+        {{ myranking.account.points }}
+        </p>
+    {% endfor %}
+
+
 {% endblock %}

@@ -329,8 +329,8 @@
       "one_two_draw_overtime": 0,
       "one_two_draw_penalties": 0,
       "regular": 2,
-      "overtime": 3,
-      "penalties": 5
+      "overtime": 2,
+      "penalties": 2
     }
   },
   {
@@ -342,8 +342,8 @@
       "one_two_draw_overtime": 1,
       "one_two_draw_penalties": 1,
       "regular": 1,
-      "overtime": 2,
-      "penalties": 3
+      "overtime": 1,
+      "penalties": 1
     }
   },
   {
@@ -368,72 +368,90 @@
     "model": "bet.event",
     "pk": 1,
     "fields": {
+      "is_super": 1,
       "label": "WM 14",
-      "is_super": 1
+      "begin": "2014-06-10T00:00:00+01:00",
+      "end": "2014-07-14T00:00:00+01:00"
     }
   },
   {
     "model": "bet.event",
     "pk": 2,
     "fields": {
+      "parent": 1,
       "label": "Gruppe A",
-      "parent": 1
+      "begin": "2014-06-10T00:00:00+01:00",
+      "end": "2014-06-24T00:00:00+01:00"
     }
   },
   {
     "model": "bet.event",
     "pk": 3,
     "fields": {
+      "parent": 1,
       "label": "Gruppe B",
-      "parent": 1
+      "begin": "2014-06-10T00:00:00+01:00",
+      "end": "2014-06-24T00:00:00+01:00"
     }
   },
   {
     "model": "bet.event",
     "pk": 4,
     "fields": {
+      "parent": 1,
       "label": "Gruppe C",
-      "parent": 1
+      "begin": "2014-06-10T00:00:00+01:00",
+      "end": "2014-06-24T00:00:00+01:00"
     }
   },
   {
     "model": "bet.event",
     "pk": 5,
     "fields": {
+      "parent": 1,
       "label": "Gruppe D",
-      "parent": 1
+      "begin": "2014-06-10T00:00:00+01:00",
+      "end": "2014-06-24T00:00:00+01:00"
     }
   },
   {
     "model": "bet.event",
     "pk": 6,
     "fields": {
+      "parent": 1,
       "label": "Gruppe E",
-      "parent": 1
+      "begin": "2014-06-10T00:00:00+01:00",
+      "end": "2014-06-24T00:00:00+01:00"
     }
   },
   {
     "model": "bet.event",
     "pk": 7,
     "fields": {
+      "parent": 1,
       "label": "Gruppe F",
-      "parent": 1
+      "begin": "2014-06-10T00:00:00+01:00",
+      "end": "2014-06-24T00:00:00+01:00"
     }
   },
   {
     "model": "bet.event",
     "pk": 8,
     "fields": {
+      "parent": 1,
       "label": "Gruppe G",
-      "parent": 1
+      "begin": "2014-06-10T00:00:00+01:00",
+      "end": "2014-06-24T00:00:00+01:00"
     }
   },
   {
     "model": "bet.event",
     "pk": 9,
     "fields": {
+      "parent": 1,
       "label": "Gruppe H",
-      "parent": 1
+      "begin": "2014-06-10T00:00:00+01:00",
+      "end": "2014-06-24T00:00:00+01:00"
     }
   }
 ]

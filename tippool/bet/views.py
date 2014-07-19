@@ -13,18 +13,6 @@ from bet.forms import BetForm
 
 
 
-
-class PoolUserBet2(object):
-    def __init__(self, pool=None, user=None, bet=None):
-        self.pool = pool
-        self.user = user
-        self.bet = bet
-
-class MatchBet2(object):
-    def __init__(self, match=None):
-        self.match = match
-        self.betlist = []
-
 class MyBet(object):
     def __init__(self, pool=None, user=None, frmbet=None):
         self.pool = pool
@@ -40,6 +28,13 @@ class MyEvent(object):
     def __init__(self, parent=None):
         self.parent = parent
         self.sublist = []
+
+class MyRanking(object):
+    def __init__(self, pool=None, event=None, user=None, account=None):
+        self.pool = pool
+        self.event = event
+        self.user = user
+        self.account = account
 
 
 
@@ -180,11 +175,6 @@ def bets(request, poolid=None, eventid=None):
 
 
 
-def ranking(request):
-    return render(request, 'bet/ranking.html', {'body_id': 'ranking'} )
-
-
-
 def do_bet(request):
     # Get the context from the request.
     context = RequestContext(request)
@@ -263,3 +253,43 @@ def calc_points(request, req_username=None):
             bet.calc_points()
 
     return HttpResponseRedirect('/bet/mybets')
+
+
+
+def ranking(request, poolid=None, eventid=None):
+    context = RequestContext(request)
+
+    if poolid == None:
+        return HttpResponseRedirect('/bet/ranking')
+    else:
+        pool = Pool.objects.get(id=poolid)
+        pools = Pool.objects.filter()
+
+    if eventid == None:
+        return HttpResponseRedirect('/bet/ranking')
+    else:
+        event = Event.objects.get(id=eventid)
+        events = Event.objects.filter()
+
+    try:
+        accounts = Account.objects.filter(event_id=event.id, membership__pool_id=pool.id)
+    except Account.DoesNotExist:
+        return HttpResponseRedirect('/bet/ranking')
+
+    myrankings = []
+    for account in accounts:
+        bets = Bet.objects.filter(account_id=account.id)
+        pts = 0
+
+        for bet in bets:
+            bet.calc_points()
+            pts += bet.points
+
+        account.points = pts
+        membership = Membership.objects.get(id=account.membership_id)
+        user = User.objects.get(id=membership.user_id)
+        myranking = MyRanking(pool, event, user, account)
+        myrankings.append(myranking)
+
+    return render(request, 'bet/ranking.html', {'body_id': 'ranking', 'pools': pools, 'pool': pool, 'events': events, 'event': event, 'myrankings': myrankings} )
+

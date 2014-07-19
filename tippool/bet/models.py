@@ -112,9 +112,11 @@ class Event(models.Model):
     objects = EventManager()
 
     pools = models.ManyToManyField(Pool, through='PoolEvent')
-    is_super = models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
     parent = models.ForeignKey('self', null=True, blank=True)
+    is_super = models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
     label = models.CharField(max_length=100, unique=True,  null=False)
+    begin = models.DateTimeField()
+    end = models.DateTimeField()
     active = models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=1)
 
     def __unicode__(self): 
@@ -156,7 +158,7 @@ class Account(models.Model):
 
     event = models.ForeignKey(Event)
     membership = models.ForeignKey(Membership)
-    rating = models.IntegerField(null=True, blank=True)
+    points = models.IntegerField(null=True, blank=True)
 
     class Meta:
         unique_together = (("membership", "event"),)
@@ -246,8 +248,6 @@ class Bet(models.Model):
 
     match= models.ForeignKey(Match)
     account= models.ForeignKey(Account)
-    # overtime= models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
-    # penalties = models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
     team1_score_regular = models.PositiveSmallIntegerField(choices=Choices.GOAL_CHOICES, null=True, blank=True, default=None)
     team1_score_overtime = models.PositiveSmallIntegerField(choices=Choices.GOAL_CHOICES, null=True, blank=True, default=None)
     team1_score_penalties = models.PositiveSmallIntegerField(choices=Choices.GOAL_CHOICES, null=True, blank=True, default=None)
