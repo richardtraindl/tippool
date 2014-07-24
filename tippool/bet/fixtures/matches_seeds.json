@@ -622,5 +622,17 @@
       "team1": ["Algerien"],
       "team2": ["Russland"]
     }
+  },
+  {
+    "model": "bet.match",
+    "fields": {
+      "event": ["ÖFB Runde 1"],
+      "begin": "2014-07-24T17:00:00+01:00",
+      "status": 10,
+      "has_overtime": 0,
+      "has_penalties": 0,
+      "team1": ["Rapid Wien"],
+      "team2": ["Austria Wien"]
+    }
   }
 ]

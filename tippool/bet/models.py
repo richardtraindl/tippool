@@ -45,6 +45,12 @@ class Choices():
         (20, '20'),
     )
 
+    EVENT_TYPE_CHOICES = (
+        (10, 'standalone'),
+        (20, 'super'),
+        (30, 'child'),
+    )
+
 
 
 class ScoreRule(models.Model):
@@ -113,7 +119,7 @@ class Event(models.Model):
 
     pools = models.ManyToManyField(Pool, through='PoolEvent')
     parent = models.ForeignKey('self', null=True, blank=True)
-    is_super = models.PositiveSmallIntegerField(choices=Choices.BOOL_CHOICES, null=False, default=0)
+    event_type = models.PositiveSmallIntegerField(choices=Choices.EVENT_TYPE_CHOICES, null=False, default=10)
     label = models.CharField(max_length=100, unique=True,  null=False)
     begin = models.DateTimeField()
     end = models.DateTimeField()
@@ -300,6 +306,8 @@ class Bet(models.Model):
 
     def is_acceptable(self):
         match = Match.objects.get(id=self.match_id)
+        print(datetime.datetime.now()) # tzlocal()
+        print(match.begin)
         return match.status == 10 and datetime.datetime.now(tzlocal()) < match.begin
 
     def is_bet_equal_match_regular(self):

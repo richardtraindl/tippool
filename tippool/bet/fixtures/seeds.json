@@ -289,6 +289,22 @@
     }
   },
   {
+    "model": "bet.team",
+    "fields": {
+      "name": "Rapid Wien",
+      "logo": "",
+      "active": 1
+    }
+  },
+  {
+    "model": "bet.team",
+    "fields": {
+      "name": "Austria Wien",
+      "logo": "",
+      "active": 1
+    }
+  },
+  {
     "model": "auth.user",
     "pk": 2,
     "fields": {
@@ -368,7 +384,7 @@
     "model": "bet.event",
     "pk": 1,
     "fields": {
-      "is_super": 1,
+      "event_type": 20,
       "label": "WM 14",
       "begin": "2014-06-10T00:00:00+01:00",
       "end": "2014-07-14T00:00:00+01:00"
@@ -379,6 +395,7 @@
     "pk": 2,
     "fields": {
       "parent": 1,
+      "event_type": 30,
       "label": "Gruppe A",
       "begin": "2014-06-10T00:00:00+01:00",
       "end": "2014-06-24T00:00:00+01:00"
@@ -389,6 +406,7 @@
     "pk": 3,
     "fields": {
       "parent": 1,
+      "event_type": 30,
       "label": "Gruppe B",
       "begin": "2014-06-10T00:00:00+01:00",
       "end": "2014-06-24T00:00:00+01:00"
@@ -399,6 +417,7 @@
     "pk": 4,
     "fields": {
       "parent": 1,
+      "event_type": 30,
       "label": "Gruppe C",
       "begin": "2014-06-10T00:00:00+01:00",
       "end": "2014-06-24T00:00:00+01:00"
@@ -409,6 +428,7 @@
     "pk": 5,
     "fields": {
       "parent": 1,
+      "event_type": 30,
       "label": "Gruppe D",
       "begin": "2014-06-10T00:00:00+01:00",
       "end": "2014-06-24T00:00:00+01:00"
@@ -419,6 +439,7 @@
     "pk": 6,
     "fields": {
       "parent": 1,
+      "event_type": 30,
       "label": "Gruppe E",
       "begin": "2014-06-10T00:00:00+01:00",
       "end": "2014-06-24T00:00:00+01:00"
@@ -429,6 +450,7 @@
     "pk": 7,
     "fields": {
       "parent": 1,
+      "event_type": 30,
       "label": "Gruppe F",
       "begin": "2014-06-10T00:00:00+01:00",
       "end": "2014-06-24T00:00:00+01:00"
@@ -439,6 +461,7 @@
     "pk": 8,
     "fields": {
       "parent": 1,
+      "event_type": 30,
       "label": "Gruppe G",
       "begin": "2014-06-10T00:00:00+01:00",
       "end": "2014-06-24T00:00:00+01:00"
@@ -449,9 +472,20 @@
     "pk": 9,
     "fields": {
       "parent": 1,
+      "event_type": 30,
       "label": "Gruppe H",
       "begin": "2014-06-10T00:00:00+01:00",
       "end": "2014-06-24T00:00:00+01:00"
+    }
+  },
+  {
+    "model": "bet.event",
+    "pk": 10,
+    "fields": {
+      "event_type": 10,
+      "label": "ÖFB Runde 1",
+      "begin": "2014-07-24T00:00:00+01:00",
+      "end": "2014-07-27T00:00:00+01:00"
     }
   }
 ]

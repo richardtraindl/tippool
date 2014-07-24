@@ -4,6 +4,7 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from itertools import chain
+from django.db import models
 from django.shortcuts import get_object_or_404
 import datetime
 from dateutil.tz import tzlocal
@@ -25,8 +26,8 @@ class MatchBet(object):
         self.mybetlist = []
 
 class MyEvent(object):
-    def __init__(self, parent=None):
-        self.parent = parent
+    def __init__(self, event=None):
+        self.event = event
         self.sublist = []
 
 class MyRanking(object):
@@ -40,32 +41,27 @@ class MyRanking(object):
 
 def mybets(request, eventid=None):
     context = RequestContext(request)
-    print(eventid)
 
     # all pools where user is member
     pools = Pool.objects.filter(membership__user_id=request.user.id, active=1)
 
     # all events where user is registered through pools
-    superevents = Event.objects.filter(poolevent__pool__membership__user_id=request.user.id, \
-                                        active=1, is_super=1).distinct()
+    events = Event.objects.filter(models.Q(poolevent__pool__membership__user_id=request.user.id), models.Q(active=1), (models.Q(event_type=10) | models.Q(event_type=20))).distinct()
+
     myevents = []
-    for event in superevents:
+    for event in events:
         myevent = MyEvent()
-        myevent.parent = event
-        myevent.sublist = Event.objects.filter(parent_id=event.id, active=1)
-        myevents.append(myevent)
-    
-    standaloneevents = Event.objects.filter(poolevent__pool__membership__user_id=request.user.id, \
-                                    active=1, is_super=0).exclude(parent_id__isnull=False).distinct()
-    for event in standaloneevents:
-        myevent = MyEvent()
-        myevent.parent = None
-        myevent.sublist.append(event)
+        myevent.event = event
+        if event.event_type == 20:
+            myevent.sublist = Event.objects.filter(parent_id=event.id, active=1)
         myevents.append(myevent)
 
     # event
     if eventid == None:
-        event = myevents[0].sublist[0]
+        if myevents[0].event.event_type == 20:
+            event = myevents[0].sublist[0]
+        else:
+            event = myevents[0]
     else:
         event = Event.objects.get(id=eventid)
 
@@ -119,27 +115,22 @@ def bets(request, poolid=None, eventid=None):
         pool = Pool.objects.get(id=poolid)
 
     # all events for choosen pool
-    superevents = Event.objects.filter(poolevent__pool_id=pool.id, active=1, \
-                        is_super=1).distinct()
+    events = Event.objects.filter(models.Q(poolevent__pool_id=pool.id), models.Q(active=1), (models.Q(event_type=10) | models.Q(event_type=20))).distinct()
+    
     myevents = []
-    for event in superevents:
+    for event in events:
         myevent = MyEvent()
-        myevent.parent = event
-        myevent.sublist = Event.objects.filter(parent_id=event.id, active=1)
-        myevents.append(myevent)
-
-    standaloneevents = Event.objects.filter(poolevent__pool_id=pool.id, active=1, \
-                            is_super=0).exclude(parent_id__isnull=False).distinct()
-    for event in standaloneevents:
-        myevent = MyEvent()
-        myevent.parent = None
-        myevent.sublist.append(event)
+        myevent.event = event
+        if event.event_type == 20:
+            myevent.sublist = Event.objects.filter(parent_id=event.id, active=1)
         myevents.append(myevent)
 
     # event
     if eventid == None:
-        # event = Event.objects.filter(poolevent__pool_id=pool.id, active=True)[:1].get()
-        event = myevents[0].sublist[0]
+        if myevents[0].event.event_type == 20:
+            event = myevents[0].sublist[0]
+        else:
+            event = myevents[0]
     else:
         event = Event.objects.get(id=eventid)
 

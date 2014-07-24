@@ -19,14 +19,22 @@ Tipps
     <ul style="list-style-type: none">
     {% for myevt in myevents %}
         <li>
-            {{ myevt.parent.label | default_if_none:"" }}
-            {% for sub in myevt.sublist %}
-                {% if sub == event %}
-                    {{ sub.label }} |
+            {% if myevt.event.event_type == 10 %}
+                {% if myevt.event == event %}
+                    {{ myevt.event.label }}
                 {% else %}
-                    <a href="{% url 'bet.views.mybets' sub.id %}">{{ sub.label }}</a> |
+                    <a href="{% url 'bet.views.mybets' myevt.event.id %}">{{ myevt.event.label }}</a>
                 {% endif %}
-            {% endfor %}
+            {% else %}
+                {{ myevt.event.label | default_if_none:"" }}<span>: </span>
+                {% for sub in myevt.sublist %}
+                    {% if sub == event %}
+                        {{ sub.label }} |
+                    {% else %}
+                        <a href="{% url 'bet.views.mybets' sub.id %}">{{ sub.label }}</a> |
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         </li>
     {% endfor %}
     </ul>
