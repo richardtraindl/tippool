@@ -4,6 +4,8 @@ from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.signals import post_save
 import datetime
+import pytz
+from dateutil import tz
 from dateutil.tz import tzlocal
 
 
@@ -306,9 +308,7 @@ class Bet(models.Model):
 
     def is_acceptable(self):
         match = Match.objects.get(id=self.match_id)
-        print(datetime.datetime.now()) # tzlocal()
-        print(match.begin)
-        return match.status == 10 and datetime.datetime.now(tzlocal()) < match.begin
+        return match.status == 10 and datetime.datetime.now(tz.gettz('Europe/Vienna')) < match.begin.astimezone(pytz.timezone('Europe/Vienna'))
 
     def is_bet_equal_match_regular(self):
         match = Match.objects.get(id=self.match_id)
