@@ -9,7 +9,46 @@ Wertung
 
 {% block content %}
 
-<p>Wertung</p>
+<div class="small-gap"></div>
+
+<div class="subnav">
+    {% for pitem in pools %}
+        {% if pitem == pool %}
+            {{ pitem.label }} |
+        {% else %}
+            <a href="{% url 'bet.views.ranking' pitem.id event.id %}">{{ pitem.label }}</a> |
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="subnav">
+    <ul style="list-style-type: none">
+    {% for myevt in myevents %}
+        <li>
+            {% if myevt.event.event_type == 10 %}
+                {% if myevt.event == event %}
+                    {{ myevt.event.label }}
+                {% else %}
+                    <a href="{% url 'bet.views.ranking' pool.id myevt.event.id %}">{{ myevt.event.label }}</a>
+                {% endif %}
+            {% else %}
+                {{ myevt.event.label | default_if_none:"" }}<span>: </span>
+                {% for sub in myevt.sublist %}
+                    {% if sub == event %}
+                        {{ sub.label }} |
+                    {% else %}
+                        <a href="{% url 'bet.views.ranking' pool.id sub.id %}">{{ sub.label }}</a> |
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+
+<div class="gap"></div>
+
+<h2>Wertung für Wetten aus {{ pool.label }} - {{ event.label }}</h2>
 
     {% for myranking in myrankings %}
         <p>

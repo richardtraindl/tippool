@@ -218,7 +218,7 @@ def admin(request):
     for match in matches:
         bets = Bet.objects.filter(match_id = match.id)
         for bet in bets:
-            bet.rate()
+            bet.calc_points()
 
     return render_to_response('bet/admin.html', {'body_id': 'admin', 'matches': matches}, context )
 
@@ -250,22 +250,45 @@ def calc_points(request, req_username=None):
 def ranking(request, poolid=None, eventid=None):
     context = RequestContext(request)
 
+    # pool/pools
+    pools = Pool.objects.filter(active=1)
     if poolid == None:
-        return HttpResponseRedirect('/bet/ranking')
+        if len(pools) == 0:
+            # todo redirect to error page
+            return HttpResponseRedirect('/bet/mybets')
+        else:
+            pool = pools[0]
     else:
         pool = Pool.objects.get(id=poolid)
-        pools = Pool.objects.filter()
+
+
+    # event/events
+    events = Event.objects.filter(models.Q(poolevent__pool_id=pool.id), models.Q(active=1), (models.Q(event_type=10) | models.Q(event_type=20))).distinct()
+    myevents = []
+    for event in events:
+        myevent = MyEvent()
+        myevent.event = event
+        if event.event_type == 20:
+            myevent.sublist = Event.objects.filter(parent_id=event.id, active=1)
+        myevents.append(myevent)
 
     if eventid == None:
-        return HttpResponseRedirect('/bet/ranking')
+        if len(events) == 0:
+            # todo redirect to error page
+            return HttpResponseRedirect('/bet/mybets')
+        else:
+            if myevents[0].event.event_type == 20:
+                event = myevents[0].sublist[0]
+            else:
+                event = myevents[0]
     else:
         event = Event.objects.get(id=eventid)
-        events = Event.objects.filter()
+
 
     try:
         accounts = Account.objects.filter(event_id=event.id, membership__pool_id=pool.id)
     except Account.DoesNotExist:
-        return HttpResponseRedirect('/bet/ranking')
+        return HttpResponseRedirect('/bet/mybets')
 
     myrankings = []
     for account in accounts:
@@ -284,5 +307,5 @@ def ranking(request, poolid=None, eventid=None):
 
     rankings = sorted(myrankings, key=lambda myranking: myranking.account.points, reverse=True)
 
-    return render(request, 'bet/ranking.html', {'body_id': 'ranking', 'pools': pools, 'pool': pool, 'events': events, 'event': event, 'myrankings': rankings } )
+    return render(request, 'bet/ranking.html', {'body_id': 'ranking', 'pools': pools, 'pool': pool, 'myevents': myevents, 'event': event, 'myrankings': rankings } )
 
