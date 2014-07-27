@@ -44,9 +44,15 @@ def mybets(request, eventid=None):
 
     # all pools where user is member
     pools = Pool.objects.filter(membership__user_id=request.user.id, active=1)
+    if len(pools) == 0:
+        # todo redirect to error page
+        return HttpResponseRedirect('/bet/admin')
 
     # all events where user is registered through pools
     events = Event.objects.filter(models.Q(poolevent__pool__membership__user_id=request.user.id), models.Q(active=1), (models.Q(event_type=10) | models.Q(event_type=20))).distinct()
+    if len(events) == 0:
+        # todo redirect to error page
+        return HttpResponseRedirect('/bet/admin')
 
     myevents = []
     for event in events:
@@ -64,6 +70,11 @@ def mybets(request, eventid=None):
             event = myevents[0]
     else:
         event = Event.objects.get(id=eventid)
+
+    if event == None:
+        # todo redirect to error page
+        return HttpResponseRedirect('/bet/admin')
+
 
     # all matches for choosen event
     matches = Match.objects.filter(event_id=event.id)
@@ -87,9 +98,6 @@ def mybets(request, eventid=None):
             try:
                 bet = Bet.objects.get(match_id=match.id, account_id=account.id)
                 mybet = MyBet(pool, request.user, BetForm(instance=bet))
-                #mybet.pool = pool
-                #mybet.user = request.user
-                #mybet.frmbet = BetForm(instance=bet)
                 matchbet.mybetlist.append(mybet)
             except Bet.DoesNotExist:
                 bet = Bet()
@@ -114,9 +122,17 @@ def bets(request, poolid=None, eventid=None):
     else:
         pool = Pool.objects.get(id=poolid)
 
-    # all events for choosen pool
+    if pool == None:
+        # todo redirect to error page
+        return HttpResponseRedirect('/bet/admin')
+
+
+    # event/events
     events = Event.objects.filter(models.Q(poolevent__pool_id=pool.id), models.Q(active=1), (models.Q(event_type=10) | models.Q(event_type=20))).distinct()
-    
+    if len(events) == 0:
+        # todo redirect to error page
+        return HttpResponseRedirect('/bet/admin')
+
     myevents = []
     for event in events:
         myevent = MyEvent()
@@ -125,7 +141,6 @@ def bets(request, poolid=None, eventid=None):
             myevent.sublist = Event.objects.filter(parent_id=event.id, active=1)
         myevents.append(myevent)
 
-    # event
     if eventid == None:
         if myevents[0].event.event_type == 20:
             event = myevents[0].sublist[0]
@@ -134,11 +149,14 @@ def bets(request, poolid=None, eventid=None):
     else:
         event = Event.objects.get(id=eventid)
 
+    if event == None:
+        # todo redirect to error page
+        return HttpResponseRedirect('/bet/admin')
+
+
     # all pools where user is member
     pools = Pool.objects.filter(membership__user_id=request.user.id, active=1)
 
-    # all events for choosen pool
-    # events = Event.objects.filter(poolevent__pool_id=pool.id, active=True)
 
     # all matches for choosen event
     matches = Match.objects.filter(event_id=event.id)
@@ -255,7 +273,7 @@ def ranking(request, poolid=None, eventid=None):
     if poolid == None:
         if len(pools) == 0:
             # todo redirect to error page
-            return HttpResponseRedirect('/bet/mybets')
+            return HttpResponseRedirect('/bet/admin')
         else:
             pool = pools[0]
     else:
@@ -275,7 +293,7 @@ def ranking(request, poolid=None, eventid=None):
     if eventid == None:
         if len(events) == 0:
             # todo redirect to error page
-            return HttpResponseRedirect('/bet/mybets')
+            return HttpResponseRedirect('/bet/admin')
         else:
             if myevents[0].event.event_type == 20:
                 event = myevents[0].sublist[0]
