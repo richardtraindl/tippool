@@ -242,7 +242,38 @@ def admin(request):
 
 
 
-def calc_points(request, req_username=None):
+def calc_points(request, eventid=None):
+    context = RequestContext(request)
+
+    if eventid == None:
+        # todo redirect to error page
+        return HttpResponseRedirect('/bet/mybets')
+    else:
+        event = Event.objects.get(id=eventid)
+
+    if event == None:
+        # todo redirect to error page
+        return HttpResponseRedirect('/bet/mybets')
+
+    pools = Pool.objects.filter(poolevent__event_id=event.id)
+
+    for pool in pools:
+        accounts = Account.objects.filter(event_id=event.id, membership__pool_id=pool.id)
+        if event.event_type == 10:
+            for account in accounts:
+                account.calc_points()
+        if event.event_type == 20:
+            pts = 0
+            for account in accounts:
+                subaccounts = Account.objects.filter(membership_id=account.membership_id)
+                for subaccount in subaccounts:
+                    pts += subaccount.calc_points()
+                account.points = pts
+
+    return HttpResponseRedirect('/bet/mybets')
+
+
+def calc_points2(request, req_username=None):
     context = RequestContext(request)
 
     # users

@@ -176,6 +176,17 @@ class Account(models.Model):
                 self.membership.pool.label + " / " + \
                 self.event.label
 
+    def calc_points(self):
+        pts = 0
+
+        bets = Bet.objects.filter(account_id=self.id)
+        for bet in bets:
+            if bet.calc_points() != None:
+                pts += bet.calc_points()
+        self.points = pts
+        self.save()
+        return pts
+
 
 
 class TeamManager(models.Manager):
