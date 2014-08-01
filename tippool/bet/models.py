@@ -178,13 +178,25 @@ class Account(models.Model):
 
     def calc_points(self):
         pts = 0
-
-        bets = Bet.objects.filter(account_id=self.id)
-        for bet in bets:
-            if bet.calc_points() != None:
+        event = Event.objects.get(id=self.event_id)
+        if event.event_type == 10: 
+            bets = Bet.objects.filter(account_id=self.id)
+            for bet in bets:
                 pts += bet.calc_points()
-        self.points = pts
-        self.save()
+            self.points = pts
+            self.save()
+        elif event.event_type == 20:
+            subaccounts = Account.objects.filter(event__parent_id=self.event_id, membership_id=self.membership_id)
+            for subaccount in subaccounts:
+                subpts = 0
+                bets = Bet.objects.filter(account_id=subaccount.id)
+                for bet in bets:
+                    subpts += bet.calc_points()
+                pts += subpts
+                subaccount.points = subpts
+                subaccount.save()                
+            self.points = pts
+            self.save()
         return pts
 
 
@@ -345,7 +357,8 @@ class Bet(models.Model):
 
         if b_12X_regular == None or m_12X_regular == None:
             self.points = pts
-            return None
+            self.save()
+            return pts
 
         account = Account.objects.get(id=self.account_id)
         membership = Membership.objects.get(id=account.membership_id)

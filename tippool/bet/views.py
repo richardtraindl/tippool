@@ -259,38 +259,19 @@ def calc_points(request, eventid=None):
 
     for pool in pools:
         accounts = Account.objects.filter(event_id=event.id, membership__pool_id=pool.id)
-        if event.event_type == 10:
-            for account in accounts:
-                account.calc_points()
-        if event.event_type == 20:
-            pts = 0
-            for account in accounts:
-                subaccounts = Account.objects.filter(membership_id=account.membership_id)
-                for subaccount in subaccounts:
-                    pts += subaccount.calc_points()
-                account.points = pts
-
-    return HttpResponseRedirect('/bet/mybets')
-
-
-def calc_points2(request, req_username=None):
-    context = RequestContext(request)
-
-    # users
-    users = []
-    if req_username == None:
-        users = User.objects.filter()
-    else:
-        try:
-            users.append(User.objects.get(username=req_username))
-        except User.DoesNotExist:
-            users = User.objects.filter()
-
-    for user in users:
-        bets = Bet.objects.filter(account__membership__user_id=user.id)
-
-        for bet in bets:
-            bet.calc_points()
+        for account in accounts:
+            account.calc_points()
+        #if event.event_type == 10:
+        #    for account in accounts:
+        #        account.calc_points()
+        #if event.event_type == 20:
+        #    pts = 0
+        #    for account in accounts:
+        #        subaccounts = Account.objects.filter(membership_id=account.membership_id)
+        #        for subaccount in subaccounts:
+        #            pts += subaccount.calc_points()
+        #        account.points = pts
+        #        account.save()
 
     return HttpResponseRedirect('/bet/mybets')
 
@@ -326,10 +307,7 @@ def ranking(request, poolid=None, eventid=None):
             # todo redirect to error page
             return HttpResponseRedirect('/bet/admin')
         else:
-            if myevents[0].event.event_type == 20:
-                event = myevents[0].sublist[0]
-            else:
-                event = myevents[0]
+            event = myevents[0].event
     else:
         event = Event.objects.get(id=eventid)
 
@@ -341,14 +319,7 @@ def ranking(request, poolid=None, eventid=None):
 
     myrankings = []
     for account in accounts:
-        bets = Bet.objects.filter(account_id=account.id)
-        pts = 0
-
-        for bet in bets:
-            bet.calc_points()
-            pts += bet.points
-
-        account.points = pts
+        # account.calc_points()
         membership = Membership.objects.get(id=account.membership_id)
         user = User.objects.get(id=membership.user_id)
         myranking = MyRanking(pool, event, user, account)

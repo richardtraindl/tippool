@@ -32,7 +32,11 @@ Wertung
                     <a href="{% url 'bet.views.ranking' pool.id myevt.event.id %}">{{ myevt.event.label }}</a>
                 {% endif %}
             {% else %}
-                {{ myevt.event.label | default_if_none:"" }}<span>: </span>
+                {% if myevt.event == event %}
+                    {{ myevt.event.label }}<span>: </span>
+                {% else %}
+                    <a href="{% url 'bet.views.ranking' pool.id myevt.event.id %}">{{ myevt.event.label }}</a>
+                {% endif %}
                 {% for sub in myevt.sublist %}
                     {% if sub == event %}
                         {{ sub.label }} |
